@@ -1,5 +1,6 @@
 import { Dispatch, AnyAction } from "redux";
 import { connect } from "react-redux";
+import { withRouter } from "react-router";
 import { State } from "../redux/state";
 import { AppBar } from "../components/AppBar";
 import { getLoggedInUser } from "../redux/selectors/getLoggedInUser";
@@ -16,4 +17,4 @@ function mapDispatchToProps(dispatch: Dispatch<AnyAction>) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(AppBar);
+)(withRouter(AppBar));

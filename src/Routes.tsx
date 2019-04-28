@@ -1,5 +1,6 @@
 import React from "react";
 import { NativeRouter, Route, Redirect } from "react-router-native";
+import AppBar from "./containers/AppBar";
 import MemberRoute from "./containers/MemberRoute";
 import Guest from "./containers/Guest";
 import Login from "./containers/Login";
@@ -15,6 +16,7 @@ type Props = {};
 export function Routes(props: Props) {
   return (
     <NativeRouter>
+      <AppBar />
       <MemberRoute exact path="/" component={Dashboard} />
       <Route path="/welcome" component={Guest} />
       <Route path="/login" component={Login} />

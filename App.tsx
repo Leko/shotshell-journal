@@ -3,7 +3,6 @@ import { Font, AppLoading } from "expo";
 import { Provider } from "react-redux";
 import { View } from "@shoutem/ui";
 import { Routes } from "./src/Routes";
-import AppBar from "./src/containers/AppBar";
 import { createStore } from "./src/redux";
 
 const store = createStore();
@@ -40,10 +39,7 @@ export default class App extends React.Component {
 
     return (
       <Provider store={store}>
-        <AppBar />
-        <View styleName="flexible">
-          <Routes />
-        </View>
+        <Routes />
       </Provider>
     );
   }
