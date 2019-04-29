@@ -19,7 +19,8 @@ export const addJournal = (
 
   const journalWithUser = {
     ...journal,
-    userId: user.id
+    userId: user.id,
+    createdAt: new Date()
   };
   const ref = await app
     .firestore()

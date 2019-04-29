@@ -1,18 +1,24 @@
 import {
   createStore as createReduxStore,
   applyMiddleware,
-  combineReducers
+  combineReducers,
+  AnyAction
 } from "redux";
-import thunk from "redux-thunk";
+import thunk, { ThunkAction } from "redux-thunk";
 import { reducer as user } from "./store/user";
+import { reducer as journals } from "./store/journals";
+import { reducer as licenses } from "./store/licenses";
 import { firebaseAuth } from "./middleware/firebase-auth";
 import { app } from "../firebase";
+import { State } from "./state";
 
 export function createStore() {
   const rootReducer = combineReducers({
-    user
+    user,
+    journals,
+    licenses
   });
-  return createReduxStore(
+  return createReduxStore<State, any, {}, {}>(
     rootReducer,
     applyMiddleware(firebaseAuth(app), thunk)
   );

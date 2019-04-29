@@ -4,6 +4,7 @@ export type Journal = {
   id: string;
   date: Date;
   userId: string;
+  createdAt: Date;
   licenseId: string;
   amount: number;
 } & (
@@ -16,4 +17,4 @@ export type Journal = {
       place: string;
     });
 
-export type UnsavedJournal = Omit<Journal, "id" | "userId">;
+export type UnsavedJournal = Omit<Journal, "id" | "userId" | "createdAt">;

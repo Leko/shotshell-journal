@@ -6,16 +6,33 @@ import {
   fetchLicensesFailed,
   fetchLicensesSuccess
 } from "../redux/store/licenses/actions";
+import { app } from "../firebase";
+import { getLoggedInUser } from "../redux/selectors/getLoggedInUser";
+import { License } from "../models/License";
 
 export const fetchLicenses = (): ThunkAction<
   Promise<void>,
   State,
   {},
   AnyAction
-> => async dispatch => {
+> => async (dispatch, getState) => {
   dispatch(fetchLicensesStart());
+
+  const user = getLoggedInUser(getState());
+  if (!user) {
+    return;
+  }
+
   try {
-    const licenses = await Promise.resolve({});
+    const snapshot = await app
+      .firestore()
+      .collection("licenses")
+      .where("userId", "==", user.id)
+      .get();
+    const licenses: Record<string, License> = {};
+    snapshot.forEach(docSnapshot => {
+      licenses[docSnapshot.id] = docSnapshot.data() as License;
+    });
     dispatch(fetchLicensesSuccess(licenses));
   } catch (e) {
     dispatch(fetchLicensesFailed(e));

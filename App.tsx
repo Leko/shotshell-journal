@@ -5,6 +5,9 @@ import { StyleProvider } from "@shoutem/theme";
 import { Routes } from "./src/Routes";
 import { createStore } from "./src/redux";
 import { theme } from "./src/theme";
+import { app } from "./src/firebase";
+import { fetchJournals } from "./src/usecases/fetchJournals";
+import { fetchLicenses } from "./src/usecases/fetchLicenses";
 
 const store = createStore();
 
@@ -14,6 +17,14 @@ export default class App extends React.Component {
   };
 
   async componentWillMount() {
+    app.auth().onAuthStateChanged(user => {
+      if (!user) {
+        return;
+      }
+
+      store.dispatch(fetchJournals());
+      store.dispatch(fetchLicenses());
+    });
     await Promise.all([
       Font.loadAsync({
         "Rubik-Black": require("./node_modules/@shoutem/ui/fonts/Rubik-Black.ttf"),

@@ -12,11 +12,15 @@ import {
   Icon
 } from "@shoutem/ui";
 import { PageContainer } from "../molecules/PageContainer";
+import { Journal } from "../../models/Journal";
 
-type Props = {};
+type Props = {
+  hasLicense: boolean;
+  latestJournals: Journal[];
+};
 
 export function Dashboard(props: Props) {
-  const {} = props;
+  const { hasLicense, latestJournals } = props;
 
   return (
     <PageContainer>
@@ -39,13 +43,14 @@ export function Dashboard(props: Props) {
             </Card>
           </GridRow>
         </View>
-        <View style={{ flex: 1, marginTop: 16 }}>
+        <View style={{ marginTop: 16 }}>
           <Heading>記録</Heading>
           <View style={styles.buttonContainer}>
             <Link
               to={{ pathname: "/journal/new", state: { kind: "consume" } }}
               component={Button}
               styleName="secondary"
+              disabled={!hasLicense}
             >
               <Icon name="minus-button" />
               <Text>実包の消費を記録する</Text>
@@ -56,6 +61,7 @@ export function Dashboard(props: Props) {
               to={{ pathname: "/journal/new", state: { kind: "receive" } }}
               component={Button}
               styleName="secondary"
+              disabled={!hasLicense}
             >
               <Icon name="plus-button" />
               <Text>実包の譲受を記録する</Text>
@@ -71,6 +77,16 @@ export function Dashboard(props: Props) {
             <Link to="/examine/new" component={Button}>
               <Icon name="add-event" />
               <Text>銃検日を登録する</Text>
+            </Link>
+          </View>
+        </View>
+        <View style={{ marginTop: 16 }}>
+          <Heading>最近の記録</Heading>
+          <Text>{latestJournals.length}</Text>
+          <View style={styles.buttonContainer}>
+            <Link to="/journals" component={Button}>
+              <Icon name="more-horizontal" />
+              <Text>もっと見る</Text>
             </Link>
           </View>
         </View>
