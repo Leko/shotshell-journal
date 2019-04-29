@@ -1,5 +1,7 @@
 import { Dispatch } from "redux";
 import { connect } from "react-redux";
+import addYears from "date-fns/add_years";
+import subDays from "date-fns/sub_days";
 import { RouteComponentProps } from "react-router";
 import { withFormik, WithFormikConfig } from "formik";
 import * as Yup from "yup";
@@ -33,6 +35,10 @@ const journalForm: WithFormikConfig<
   },
   UnsavedLicense
 > = {
+  isInitialValid(props) {
+    const values = journalForm.mapPropsToValues!(props);
+    return journalForm.validationSchema.isValidSync(values);
+  },
   validationSchema: Yup.object().shape({
     kind: Yup.string().required(),
     gauge: Yup.number()
@@ -48,21 +54,24 @@ const journalForm: WithFormikConfig<
   mapPropsToValues(props) {
     const { location } = props;
 
-    if ((location.state.kind as License["kind"]) === "unlimited") {
+    if (
+      location.state &&
+      (location.state.kind as License["kind"]) === "unlimited"
+    ) {
       return {
         kind: "unlimited",
-        gauge: 18,
-        startsAt: new Date(),
         purpose: "SHOOTING",
-        expiredAt: new Date(),
-        amount: 100
+        gauge: 18,
+        startsAt: new Date()
       };
     } else {
       return {
         kind: "limited",
+        purpose: "SHOOTING",
         startsAt: new Date(),
-        gauge: 18,
-        purpose: "SHOOTING"
+        expiredAt: subDays(addYears(new Date(), 1), 1),
+        amount: 100,
+        gauge: 18
       };
     }
   },

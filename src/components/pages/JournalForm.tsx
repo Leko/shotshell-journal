@@ -43,7 +43,7 @@ export function JournalForm(props: Props) {
   } = props;
   const canSubmit = isValid && !isSubmitting;
 
-  const monthDayFormatter = new Intl.DateTimeFormat("en", {
+  const monthDayFormatter = new Intl.DateTimeFormat("ja", {
     year: "numeric",
     month: "2-digit",
     day: "2-digit"
@@ -59,6 +59,7 @@ export function JournalForm(props: Props) {
       : [
           purposeToLanguage[license.purpose],
           monthDayFormatter.format(license.startsAt),
+          monthDayFormatter.format(license.expiredAt),
           `${license.gauge}番`,
           `${license.amount}発`
         ]

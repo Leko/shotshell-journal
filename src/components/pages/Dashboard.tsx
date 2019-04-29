@@ -50,7 +50,7 @@ export function Dashboard(props: Props) {
             <Link
               to={{ pathname: "/journal/new", state: { kind: "consume" } }}
               component={Button}
-              styleName="secondary"
+              styleName={["secondary", hasLicense ? "" : "muted"].join(" ")}
               disabled={!hasLicense}
             >
               <Icon name="minus-button" />
@@ -61,7 +61,7 @@ export function Dashboard(props: Props) {
             <Link
               to={{ pathname: "/journal/new", state: { kind: "receive" } }}
               component={Button}
-              styleName="secondary"
+              styleName={["secondary", hasLicense ? "" : "muted"].join(" ")}
               disabled={!hasLicense}
             >
               <Icon name="plus-button" />

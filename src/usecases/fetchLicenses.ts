@@ -31,10 +31,18 @@ export const fetchLicenses = (): ThunkAction<
       .get();
     const licenses: Record<string, License> = {};
     snapshot.forEach(docSnapshot => {
+      const data: License = docSnapshot.data();
       licenses[docSnapshot.id] = {
-        ...(docSnapshot.data() as License),
-        id: docSnapshot.id
+        ...data,
+        id: docSnapshot.id,
+        createdAt: ((data.createdAt as unknown) as firebase.firestore.Timestamp).toDate(),
+        startsAt: ((data.startsAt as unknown) as firebase.firestore.Timestamp).toDate()
       };
+      if (data.kind === "limited") {
+        licenses[
+          docSnapshot.id
+        ].expiredAt = ((data.expiredAt as unknown) as firebase.firestore.Timestamp).toDate();
+      }
     });
     dispatch(fetchLicensesSuccess(licenses));
   } catch (e) {

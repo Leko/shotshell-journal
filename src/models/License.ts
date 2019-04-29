@@ -11,16 +11,16 @@ export type UnlimitedLicense = {
 export type LimitedLicense = {
   kind: "limited";
   gauge: number;
-  amount: number;
   purpose: Purpose;
   startsAt: Date;
+  amount: number;
   expiredAt: Date;
 };
 
 export type License = {
   id: string;
   userId: string;
-  createdAt: string;
+  createdAt: Date;
 } & (UnlimitedLicense | LimitedLicense);
 
 export type UnsavedLicense = Omit<License, "id" | "userId" | "createdAt">;
