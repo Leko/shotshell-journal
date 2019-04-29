@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { View, Heading, Button, Text } from "@shoutem/ui";
 import { Redirect } from "react-router";
+import { PageContainer } from "../molecules/PageContainer";
 
 type Props = {
   authenticated: boolean;
@@ -16,13 +17,15 @@ export function Guest(props: Props) {
   }
 
   return (
-    <View style={styles.container}>
-      <Heading>Guest</Heading>
+    <PageContainer>
+      <View style={styles.container}>
+        <Heading>Guest</Heading>
 
-      <Button styleName="secondary" onPress={onRequestLogin}>
-        <Text>Sign up with Google</Text>
-      </Button>
-    </View>
+        <Button styleName="secondary" onPress={onRequestLogin}>
+          <Text>Sign up with Google</Text>
+        </Button>
+      </View>
+    </PageContainer>
   );
 }
 

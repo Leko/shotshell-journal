@@ -1,13 +1,10 @@
+import { User as UserModel } from "../../../models/User";
+
 export type User = {
   type: "success";
   accessToken: string;
   idToken?: string;
-  user: {
-    email?: string;
-    id: string;
-    name: string;
-    photoUrl?: string;
-  };
+  user: UserModel;
 };
 
 export type State = {

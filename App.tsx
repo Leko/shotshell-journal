@@ -1,9 +1,10 @@
 import React from "react";
 import { Font, AppLoading } from "expo";
 import { Provider } from "react-redux";
-import { View } from "@shoutem/ui";
+import { StyleProvider } from "@shoutem/theme";
 import { Routes } from "./src/Routes";
 import { createStore } from "./src/redux";
+import { theme } from "./src/theme";
 
 const store = createStore();
 
@@ -39,7 +40,9 @@ export default class App extends React.Component {
 
     return (
       <Provider store={store}>
-        <Routes />
+        <StyleProvider style={theme}>
+          <Routes />
+        </StyleProvider>
       </Provider>
     );
   }

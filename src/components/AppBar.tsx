@@ -14,7 +14,13 @@ export function AppBar(props: Props & RouteComponentProps) {
   return (
     <SafeAreaView>
       <View style={{ marginBottom: 8, flexDirection: "row" }}>
-        <View style={{ width: 40 }}>
+        <View
+          style={{
+            width: 40,
+            alignItems: "center",
+            justifyContent: "flex-end"
+          }}
+        >
           {history.index > 0 ? (
             <Button styleName="clear" onPress={() => history.goBack()}>
               <Icon name="left-arrow" style={{ fontSize: 20 }} />
