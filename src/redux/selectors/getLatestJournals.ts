@@ -1,7 +1,14 @@
-import { State } from "../state";
+import { createSelector } from "reselect";
+import { getJournals } from "./getJournals";
+import { Journal } from "../../models/Journal";
 
-export function getLatestJournals(state: State) {
-  return Object.values(state.journals.journals).sort((a, b) => {
+export function mapLatestJournals(journals: Journal[]) {
+  return journals.sort((a, b) => {
     return a.createdAt.getTime() - b.createdAt.getTime();
   });
 }
+
+export const getLatestJournals = createSelector(
+  getJournals,
+  mapLatestJournals
+);

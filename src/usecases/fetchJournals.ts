@@ -31,7 +31,14 @@ export const fetchJournals = (): ThunkAction<
       .get();
     const journals: Record<string, Journal> = {};
     snapshot.forEach(docSnapshot => {
-      journals[docSnapshot.id] = docSnapshot.data() as Journal;
+      journals[docSnapshot.id] = {
+        ...(docSnapshot.data() as Journal),
+        id: docSnapshot.id,
+        date: (docSnapshot.data()
+          .date as firebase.firestore.Timestamp).toDate(),
+        createdAt: (docSnapshot.data()
+          .createdAt as firebase.firestore.Timestamp).toDate()
+      };
     });
     dispatch(fetchJournalsSuccess(journals));
   } catch (e) {

@@ -31,7 +31,10 @@ export const fetchLicenses = (): ThunkAction<
       .get();
     const licenses: Record<string, License> = {};
     snapshot.forEach(docSnapshot => {
-      licenses[docSnapshot.id] = docSnapshot.data() as License;
+      licenses[docSnapshot.id] = {
+        ...(docSnapshot.data() as License),
+        id: docSnapshot.id
+      };
     });
     dispatch(fetchLicensesSuccess(licenses));
   } catch (e) {

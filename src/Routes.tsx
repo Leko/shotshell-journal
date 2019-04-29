@@ -8,6 +8,7 @@ import SignUp from "./containers/SignUp";
 import OnBoarding from "./containers/OnBoarding";
 import Dashboard from "./containers/Dashboard";
 import JournalForm from "./containers/JournalForm";
+import LicenseForm from "./containers/LicenseForm";
 import JournalDetail from "./containers/JournalDetail";
 import JournalList from "./containers/JournalList";
 
@@ -23,6 +24,7 @@ export function Routes(props: Props) {
       <Route path="/signUp" component={SignUp} />
       <MemberRoute path="/onBoarding" component={OnBoarding} />
       <MemberRoute path="/journal/new" component={JournalForm} />
+      <MemberRoute path="/license/new" component={LicenseForm} />
       <MemberRoute exact path="/journals" component={JournalList} />
       <MemberRoute path="/journals/:id" component={JournalDetail} />
     </NativeRouter>

@@ -12,6 +12,7 @@ import {
   Icon
 } from "@shoutem/ui";
 import { PageContainer } from "../molecules/PageContainer";
+import { JournalList } from "../molecules/JournalList";
 import { Journal } from "../../models/Journal";
 
 type Props = {
@@ -82,13 +83,21 @@ export function Dashboard(props: Props) {
         </View>
         <View style={{ marginTop: 16 }}>
           <Heading>最近の記録</Heading>
-          <Text>{latestJournals.length}</Text>
-          <View style={styles.buttonContainer}>
-            <Link to="/journals" component={Button}>
-              <Icon name="more-horizontal" />
-              <Text>もっと見る</Text>
-            </Link>
-          </View>
+          {latestJournals.length > 0 ? (
+            <>
+              <JournalList items={latestJournals} />
+              <View style={styles.buttonContainer}>
+                <Link to="/journals" component={Button}>
+                  <Icon name="more-horizontal" />
+                  <Text>すべて見る</Text>
+                </Link>
+              </View>
+            </>
+          ) : (
+            <>
+              <Text>記録がありません</Text>
+            </>
+          )}
         </View>
       </View>
     </PageContainer>

@@ -1,3 +1,5 @@
+type Omit<T, K> = Pick<T, Exclude<keyof T, K>>;
+
 export type Purpose = "SHOOTING" | "HUNTING";
 
 export type UnlimitedLicense = {
@@ -17,4 +19,8 @@ export type LimitedLicense = {
 
 export type License = {
   id: string;
+  userId: string;
+  createdAt: string;
 } & (UnlimitedLicense | LimitedLicense);
+
+export type UnsavedLicense = Omit<License, "id" | "userId" | "createdAt">;

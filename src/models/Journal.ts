@@ -10,11 +10,11 @@ export type Journal = {
 } & (
   | {
       kind: "consume";
-      transferrer: string;
+      place: string;
     }
   | {
       kind: "receive";
-      place: string;
+      transferrer: string;
     });
 
 export type UnsavedJournal = Omit<Journal, "id" | "userId" | "createdAt">;
