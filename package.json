@@ -13,6 +13,7 @@
     "expo": "^32.0.6",
     "firebase": "^5.10.1",
     "formik": "^1.5.4",
+    "lodash": "^4.17.11",
     "react": "16.5.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
     "react-native-keyboard-aware-scroll-view": "^0.8.0",
@@ -22,6 +23,7 @@
     "react-redux": "^6.0.1",
     "react-router": "^5.0.0",
     "react-router-native": "^5.0.0",
+    "recompose": "^0.30.0",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
@@ -29,6 +31,7 @@
   },
   "devDependencies": {
     "@types/expo": "^32.0.11",
+    "@types/lodash": "^4.14.123",
     "@types/react": "^16.8.14",
     "@types/react-native": "^0.57.50",
     "@types/react-redux": "^7.0.8",

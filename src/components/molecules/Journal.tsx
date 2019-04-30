@@ -21,15 +21,13 @@ export function Journal(props: Props) {
       <View styleName="content">
         <View styleName="horizontal">
           {journal.kind === "consume" ? (
-            <View styleName="horizontal">
-              <Subtitle>-{journal.amount}</Subtitle>
-              <Subtitle>（{journal.place}）</Subtitle>
-            </View>
+            <Subtitle>
+              -{journal.amount}、{journal.place}
+            </Subtitle>
           ) : (
-            <View styleName="horizontal">
-              <Subtitle>+{journal.amount}</Subtitle>
-              <Subtitle>（{journal.transferrer}）</Subtitle>
-            </View>
+            <Subtitle>
+              +{journal.amount}、{journal.transferrer}
+            </Subtitle>
           )}
           <View
             style={{
@@ -37,7 +35,10 @@ export function Journal(props: Props) {
               alignItems: "flex-end"
             }}
           >
-            <Caption>{monthDayFormatter.format(journal.date)}</Caption>
+            <View styleName="horizontal">
+              <Caption>{monthDayFormatter.format(journal.date)}</Caption>
+              <Caption>{monthDayFormatter.format(journal.date)}</Caption>
+            </View>
           </View>
         </View>
       </View>

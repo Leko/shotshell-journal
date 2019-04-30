@@ -1,7 +1,5 @@
 import React from "react";
 import { StyleSheet } from "react-native";
-import addYears from "date-fns/add_years";
-import subDays from "date-fns/sub_days";
 import { Toggle } from "react-powerplug";
 import DateTimePicker from "react-native-modal-datetime-picker";
 import {
@@ -14,7 +12,11 @@ import {
   TextInput
 } from "@shoutem/ui";
 import { FormikProps } from "formik";
-import { UnsavedLicense } from "../../models/License";
+import {
+  UnsavedLicense,
+  getUnlimitedExpiredAt,
+  getLimitedExpiredAt
+} from "../../models/License";
 import { PageContainer } from "../molecules/PageContainer";
 import { ValidationError } from "../atoms/ValidationError";
 
@@ -116,7 +118,12 @@ export function LicenseForm(props: Props) {
                   onCancel={toggle}
                   onConfirm={date => {
                     setFieldValue("startsAt", date);
-                    setFieldValue("expiredAt", subDays(addYears(date, 1), 1));
+                    setFieldValue(
+                      "expiredAt",
+                      values.kind === "limited"
+                        ? getLimitedExpiredAt(date)
+                        : getUnlimitedExpiredAt(date)
+                    );
                     toggle();
                   }}
                 />
@@ -126,43 +133,43 @@ export function LicenseForm(props: Props) {
           <ValidationError field="startsAt" errors={errors} touched={touched} />
         </View>
 
+        <View style={{ marginVertical: 8 }}>
+          <Title>有効期限</Title>
+          <Toggle
+            initial={false}
+            render={({ on, toggle }) => (
+              <>
+                <Button
+                  style={{ justifyContent: "flex-start" }}
+                  onPress={() => {
+                    setFieldTouched("expiredAt");
+                    toggle();
+                  }}
+                >
+                  <Text>{monthDayFormatter.format(values.expiredAt)}</Text>
+                </Button>
+                <DateTimePicker
+                  mode="date"
+                  date={values.expiredAt}
+                  isVisible={on}
+                  onCancel={toggle}
+                  onConfirm={date => {
+                    setFieldValue("expiredAt", date);
+                    toggle();
+                  }}
+                />
+              </>
+            )}
+          />
+          <ValidationError
+            field="expiredAt"
+            errors={errors}
+            touched={touched}
+          />
+        </View>
+
         {values.kind === "limited" ? (
           <>
-            <View style={{ marginVertical: 8 }}>
-              <Title>有効期限</Title>
-              <Toggle
-                initial={false}
-                render={({ on, toggle }) => (
-                  <>
-                    <Button
-                      style={{ justifyContent: "flex-start" }}
-                      onPress={() => {
-                        setFieldTouched("expiredAt");
-                        toggle();
-                      }}
-                    >
-                      <Text>{monthDayFormatter.format(values.expiredAt)}</Text>
-                    </Button>
-                    <DateTimePicker
-                      mode="date"
-                      date={values.expiredAt}
-                      isVisible={on}
-                      onCancel={toggle}
-                      onConfirm={date => {
-                        setFieldValue("expiredAt", date);
-                        toggle();
-                      }}
-                    />
-                  </>
-                )}
-              />
-              <ValidationError
-                field="expiredAt"
-                errors={errors}
-                touched={touched}
-              />
-            </View>
-
             <View style={{ marginVertical: 8 }}>
               <Title>弾数</Title>
               <TextInput

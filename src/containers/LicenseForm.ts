@@ -1,7 +1,5 @@
 import { Dispatch } from "redux";
 import { connect } from "react-redux";
-import addYears from "date-fns/add_years";
-import subDays from "date-fns/sub_days";
 import { RouteComponentProps } from "react-router";
 import { withFormik, WithFormikConfig } from "formik";
 import * as Yup from "yup";
@@ -9,7 +7,12 @@ import { State } from "../redux/state";
 import { LicenseForm } from "../components/pages/LicenseForm";
 import { addLicense } from "../usecases/addLicense";
 import { getLicenses } from "../redux/selectors/getLicenses";
-import { License, UnsavedLicense } from "../models/License";
+import {
+  License,
+  UnsavedLicense,
+  getUnlimitedExpiredAt,
+  getLimitedExpiredAt
+} from "../models/License";
 
 function mapStateToProps(state: State) {
   return {
@@ -62,14 +65,15 @@ const journalForm: WithFormikConfig<
         kind: "unlimited",
         purpose: "SHOOTING",
         gauge: 18,
-        startsAt: new Date()
+        startsAt: new Date(),
+        expiredAt: getUnlimitedExpiredAt(date)
       };
     } else {
       return {
         kind: "limited",
         purpose: "SHOOTING",
         startsAt: new Date(),
-        expiredAt: subDays(addYears(new Date(), 1), 1),
+        expiredAt: getLimitedExpiredAt(date),
         amount: 100,
         gauge: 18
       };

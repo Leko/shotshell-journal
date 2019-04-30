@@ -14,14 +14,25 @@ import {
 import { PageContainer } from "../molecules/PageContainer";
 import { JournalList } from "../molecules/JournalList";
 import { Journal } from "../../models/Journal";
+import { License } from "../../models/License";
+import { differenceInCalendarDays } from "date-fns";
 
 type Props = {
   hasLicense: boolean;
+  limitedLicense: License | null;
   latestJournals: Journal[];
+  remaining: number | null;
+  remainingLicenseCount: number | null;
 };
 
 export function Dashboard(props: Props) {
-  const { hasLicense, latestJournals } = props;
+  const {
+    hasLicense,
+    remaining,
+    remainingLicenseCount,
+    limitedLicense,
+    latestJournals
+  } = props;
 
   return (
     <PageContainer>
@@ -31,15 +42,27 @@ export function Dashboard(props: Props) {
             <Card styleName="flexible">
               <View styleName="content">
                 <Heading>残弾</Heading>
-                <Title>{123}発</Title>
+                <Title>{remaining !== null ? `あと${remaining}発` : "-"}</Title>
               </View>
             </Card>
             <Card styleName="flexible">
               <View styleName="content">
                 <Heading>譲受許可</Heading>
-                <Title>
-                  {123}発{"\n"}（あと{25}日）
-                </Title>
+                {limitedLicense ? (
+                  <Title>
+                    {remainingLicenseCount !== null
+                      ? `あと${remainingLicenseCount}発`
+                      : "-"}
+                    {"\n"}（あと
+                    {differenceInCalendarDays(
+                      limitedLicense.expiredAt,
+                      new Date()
+                    )}
+                    日）
+                  </Title>
+                ) : (
+                  <Title>-</Title>
+                )}
               </View>
             </Card>
           </GridRow>
