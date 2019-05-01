@@ -48,11 +48,15 @@ export function Report(props: Props) {
   const dateFormatter = new Intl.DateTimeFormat("ja-JP-u-ca-japanese", {
     era: "narrow"
   });
+  const sum = journals.reduce(
+    (acc, { kind, amount }) => acc + (kind === "consume" ? -amount : amount),
+    0
+  );
 
   return (
     <>
       <h1>実包（火薬類）等の保管管理簿</h1>
-      <table border={1} cellSpacing={0} cellPadding={0}>
+      <table className="full-width" cellSpacing={0} cellPadding={0}>
         <thead>
           {schema.heads.map((cells, i) => (
             <tr key={i}>
@@ -102,6 +106,15 @@ export function Report(props: Props) {
             );
           })}
         </tbody>
+        <tfoot>
+          <tr>
+            <td colSpan={9} className="no-border" />
+            <th colSpan={2}>現在数</th>
+            <td>{sum}</td>
+            <td colSpan={3}>-</td>
+            <td colSpan={3}>-</td>
+          </tr>
+        </tfoot>
       </table>
     </>
   );
