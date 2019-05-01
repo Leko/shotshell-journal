@@ -64,18 +64,18 @@ const journalForm: WithFormikConfig<
       return {
         kind: "unlimited",
         purpose: "SHOOTING",
-        gauge: 18,
+        gauge: 12,
         startsAt: new Date(),
-        expiredAt: getUnlimitedExpiredAt(date)
+        expiredAt: getUnlimitedExpiredAt(new Date())
       };
     } else {
       return {
         kind: "limited",
         purpose: "SHOOTING",
         startsAt: new Date(),
-        expiredAt: getLimitedExpiredAt(date),
+        expiredAt: getLimitedExpiredAt(new Date()),
         amount: 100,
-        gauge: 18
+        gauge: 12
       };
     }
   },

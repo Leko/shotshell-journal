@@ -15,7 +15,8 @@ import { FormikProps } from "formik";
 import {
   UnsavedLicense,
   getUnlimitedExpiredAt,
-  getLimitedExpiredAt
+  getLimitedExpiredAt,
+  getPurposeName
 } from "../../models/License";
 import { PageContainer } from "../molecules/PageContainer";
 import { ValidationError } from "../atoms/ValidationError";
@@ -81,7 +82,7 @@ export function LicenseForm(props: Props) {
               ].join(" ")}
               onPress={() => setFieldValue("purpose", "SHOOTING")}
             >
-              <Text>標的射撃</Text>
+              <Text>{getPurposeName("SHOOTING")}</Text>
             </Button>
             <Button
               styleName={[
@@ -90,7 +91,7 @@ export function LicenseForm(props: Props) {
               ].join(" ")}
               onPress={() => setFieldValue("purpose", "HUNTING")}
             >
-              <Text>狩猟</Text>
+              <Text>{getPurposeName("HUNTING")}</Text>
             </Button>
           </View>
           <ValidationError field="kind" errors={errors} touched={touched} />

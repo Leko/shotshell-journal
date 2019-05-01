@@ -37,7 +37,6 @@ export function Journal(props: Props) {
           >
             <View styleName="horizontal">
               <Caption>{monthDayFormatter.format(journal.date)}</Caption>
-              <Caption>{monthDayFormatter.format(journal.date)}</Caption>
             </View>
           </View>
         </View>

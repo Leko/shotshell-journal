@@ -8,6 +8,8 @@ import { UnsavedJournal } from "../models/Journal";
 import { JournalForm } from "../components/pages/JournalForm";
 import { addJournal } from "../usecases/addJournal";
 import { getLicenses } from "../redux/selectors/getLicenses";
+import { License } from "../models/License";
+import { Journal } from "../models/Journal";
 
 function mapStateToProps(state: State) {
   return {
@@ -29,6 +31,7 @@ function mapDispatchToProps(
 
 const journalForm: WithFormikConfig<
   RouteComponentProps<{ kind: UnsavedJournal["kind"] }> & {
+    licenses: License[];
     onSubmit(values: UnsavedJournal): any;
   },
   UnsavedJournal
@@ -46,13 +49,13 @@ const journalForm: WithFormikConfig<
   }),
 
   mapPropsToValues(props) {
-    const { location } = props;
+    const { licenses, location } = props;
 
     if ((location.state.kind as Journal["kind"]) === "consume") {
       return {
         date: new Date(),
         kind: "consume",
-        licenseId: "", // TODO: 1つのときの制御
+        licenseId: licenses.length === 1 ? licenses[0].id : "", // TODO: 1つのときの制御
         amount: 100,
         transferrer: ""
       };
@@ -60,7 +63,7 @@ const journalForm: WithFormikConfig<
       return {
         date: new Date(),
         kind: "receive",
-        licenseId: "", // TODO: 1つのときの制御
+        licenseId: licenses.length === 1 ? licenses[0].id : "", // TODO: 1つのときの制御
         amount: 100,
         transferrer: ""
       };

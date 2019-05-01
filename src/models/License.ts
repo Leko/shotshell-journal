@@ -29,8 +29,11 @@ export type License = {
 export type UnsavedLicense = Omit<License, "id" | "userId" | "createdAt">;
 
 export function getUnlimitedExpiredAt(date: Date) {
-  return subDays(addYears(date, 1), 1);
+  return subDays(addMonths(date, 4), 1);
 }
 export function getLimitedExpiredAt(date: Date) {
-  return subDays(addMonths(date, 4), 1);
+  return subDays(addYears(date, 1), 1);
+}
+export function getPurposeName(purpose: Purpose) {
+  return purpose === "HUNTING" ? "狩猟" : "標的射撃";
 }

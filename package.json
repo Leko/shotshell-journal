@@ -15,6 +15,7 @@
     "formik": "^1.5.4",
     "lodash": "^4.17.11",
     "react": "16.5.0",
+    "react-dom": "^16.8.6",
     "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
     "react-native-keyboard-aware-scroll-view": "^0.8.0",
     "react-native-modal-datetime-picker": "^7.4.0",
@@ -33,12 +34,14 @@
     "@types/expo": "^32.0.11",
     "@types/lodash": "^4.14.123",
     "@types/react": "^16.8.14",
+    "@types/react-dom": "^16.8.4",
     "@types/react-native": "^0.57.50",
     "@types/react-redux": "^7.0.8",
     "@types/react-router": "^4.4.5",
     "@types/react-router-native": "^4.2.4",
     "@types/yup": "^0.26.12",
     "babel-preset-expo": "^5.0.0",
+    "parcel-bundler": "^1.12.3",
     "typescript": "^3.4.5"
   },
   "private": true

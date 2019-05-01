@@ -7,3 +7,5 @@ npm-debug.*
 *.mobileprovision
 src/firebase/credential.json
 src/firebase/google-services.json
+.cache/
+dist
