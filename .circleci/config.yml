@@ -1,0 +1,55 @@
+version: 2.1
+workflows:
+  test-deploy:
+    jobs:
+      - test
+      - deploy:
+          requires:
+            - build-job
+          filters:
+            branches:
+              only: master
+jobs:
+  test:
+    docker:
+      - image: node:12
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v{{ .Environment.CIRCLECI_CACHE_VERSION }}-root-dependencies-{{ .Branch }}-{{ checksum "package-lock.json" }}
+            - v{{ .Environment.CIRCLECI_CACHE_VERSION }}-root-dependencies-master-{{ checksum "package-lock.json" }}
+      - run: npm ci
+      - save_cache:
+          paths:
+            - node_modules
+          key: v{{ .Environment.CIRCLECI_CACHE_VERSION }}-root-dependencies-{{ .Branch }}-{{ checksum "package-lock.json" }}
+      - restore_cache:
+          keys:
+            - v{{ .Environment.CIRCLECI_CACHE_VERSION }}-functions-dependencies-{{ .Branch }}-{{ checksum "functions/package-lock.json" }}
+            - v{{ .Environment.CIRCLECI_CACHE_VERSION }}-functions-dependencies-master-{{ checksum "functions/package-lock.json" }}
+      - run: cd functions && npm ci
+      - save_cache:
+          paths:
+            - functions/node_modules
+          key: v{{ .Environment.CIRCLECI_CACHE_VERSION }}-root-dependencies-{{ .Branch }}-{{ checksum "package-lock.json" }}
+      # - run: npm test
+      # - run: bash <(curl -s https://codecov.io/bash)
+  deploy:
+    docker:
+      - image: node:12
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v{{ .Environment.CIRCLECI_CACHE_VERSION }}-root-dependencies-{{ .Branch }}-{{ checksum "package-lock.json" }}
+            - v{{ .Environment.CIRCLECI_CACHE_VERSION }}-root-dependencies-master-{{ checksum "package-lock.json" }}
+      - restore_cache:
+          keys:
+            - v{{ .Environment.CIRCLECI_CACHE_VERSION }}-functions-dependencies-{{ .Branch }}-{{ checksum "functions/package-lock.json" }}
+            - v{{ .Environment.CIRCLECI_CACHE_VERSION }}-functions-dependencies-master-{{ checksum "functions/package-lock.json" }}
+      - run: npx expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD
+      - run: npx expo publish --non-interactive
+      - run: cd functions && npx firebase deploy --token "$FIREBASE_TOKEN"

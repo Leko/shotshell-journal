@@ -191,7 +191,7 @@ export function LicenseForm(props: Props) {
             </View>
 
             <View style={{ marginVertical: 8 }}>
-              <Title>ゲージ・番</Title>
+              <Title>ゲージ・番径</Title>
               <TextInput
                 keyboardType="decimal-pad"
                 defaultValue={String(values.gauge)}
