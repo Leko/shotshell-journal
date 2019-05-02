@@ -1,7 +1,7 @@
 import * as React from "react";
 import { render } from "react-dom";
 import { Report } from "../components/pages/Report";
-import "./print.css";
+import "../../public/print.css";
 
 render(
   <Report

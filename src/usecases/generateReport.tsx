@@ -1,9 +1,10 @@
 import React from "react";
 import { Print } from "expo";
-import { Share } from "react-native";
+import { Share, PixelRatio } from "react-native";
 import { AnyAction } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { Helmet } from "react-helmet";
+import paperSize from "paper-size";
 import { State } from "../redux/state";
 import { app } from "../firebase";
 import { renderToString } from "../lib/html";
@@ -41,29 +42,38 @@ export const generateReport = ({
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
+        <link
+          rel="stylesheet"
+          href="https://unpkg.com/paper-css@0.4.1/paper.min.css"
+        />
+        <link
+          rel="stylesheet"
+          href="https://shellshot-journal.firebaseapp.com/print.css"
+        />
         <title>
           {dateFormatter.format(startsAt)}-${dateFormatter.format(endsAt)}
           -実包等管理帳簿
         </title>
       </Helmet>
-      <Report licenses={licenses} journals={journals} />
+      <div className="sheet padding-20mm">
+        <Report licenses={licenses} journals={journals} />
+      </div>
     </>,
     Helmet
   );
-  console.log(html);
 
+  const [height, width] = paperSize.getSize("a4", {
+    unit: "pixel",
+    dpi: 144
+  });
   const { uri, numberOfPages } = await Print.printToFileAsync({
     html,
-    // https://docs.expo.io/versions/v32.0.0/sdk/print/#arguments-1
-    // https://shimeken.com/print/pixel_mm_dpi
-    width: 842,
-    height: 595
+    width,
+    height
   });
-  console.log({ uri, numberOfPages });
 
   const result = await Share.share({ url: uri });
   if (result.action === Share.dismissedAction) {
     return;
   }
-  console.log(result);
 };

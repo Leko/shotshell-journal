@@ -14,6 +14,7 @@
     "firebase": "^5.11.0",
     "formik": "^1.5.4",
     "lodash": "^4.17.11",
+    "paper-size": "^1.1.0",
     "react": "16.5.0",
     "react-dom": "^16.8.6",
     "react-helmet": "^5.2.1",

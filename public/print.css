@@ -1,0 +1,26 @@
+@page {
+  size: A4 landscape;
+}
+
+.full-width {
+  width: 100%;
+}
+.no-border {
+  border: none;
+}
+
+body {
+  counter-reset: pageNumber; /* カウンタの初期化 */
+}
+table {
+  border-collapse: collapse;
+}
+thead,
+tbody {
+  border: 2px solid #000;
+}
+th,
+td {
+  padding: 4px 8px;
+  border: 1px solid #000;
+}
