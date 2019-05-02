@@ -5,7 +5,7 @@ workflows:
       - test
       - deploy:
           requires:
-            - build-job
+            - test
           filters:
             branches:
               only: master
