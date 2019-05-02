@@ -1,20 +1,14 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 import { View, Heading, Button, Text } from "@shoutem/ui";
-import { Redirect } from "react-router";
 import { PageContainer } from "../molecules/PageContainer";
 
 type Props = {
-  authenticated: boolean;
   onRequestLogin: () => any;
 };
 
 export function Guest(props: Props) {
-  const { authenticated, onRequestLogin } = props;
-
-  if (authenticated) {
-    return <Redirect to="/" />;
-  }
+  const { onRequestLogin } = props;
 
   return (
     <PageContainer>

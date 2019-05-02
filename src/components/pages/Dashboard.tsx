@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet } from "react-native";
-import { Link } from "react-router-native";
+import { NavigationScreenProps } from "react-navigation";
 import {
   GridRow,
   Card,
@@ -26,14 +26,15 @@ type Props = {
   onRequestPrint: () => any;
 };
 
-export function Dashboard(props: Props) {
+export function Dashboard(props: Props & NavigationScreenProps) {
   const {
     hasLicense,
     remaining,
     remainingLicenseCount,
     limitedLicense,
     latestJournals,
-    onRequestPrint
+    onRequestPrint,
+    navigation
   } = props;
 
   return (
@@ -72,32 +73,34 @@ export function Dashboard(props: Props) {
         <View style={{ marginTop: 16 }}>
           <Heading>記録</Heading>
           <View style={styles.buttonContainer}>
-            <Link
-              to={{ pathname: "/journal/new", state: { kind: "consume" } }}
-              component={Button}
+            <Button
+              onPress={() =>
+                navigation.navigate("JournalForm", { kind: "consume" })
+              }
               styleName={["secondary", hasLicense ? "" : "muted"].join(" ")}
               disabled={!hasLicense}
             >
               <Icon name="minus-button" />
               <Text>実包の消費を記録する</Text>
-            </Link>
+            </Button>
           </View>
           <View style={styles.buttonContainer}>
-            <Link
-              to={{ pathname: "/journal/new", state: { kind: "receive" } }}
-              component={Button}
+            <Button
+              onPress={() =>
+                navigation.navigate("JournalForm", { kind: "receive" })
+              }
               styleName={["secondary", hasLicense ? "" : "muted"].join(" ")}
               disabled={!hasLicense}
             >
               <Icon name="plus-button" />
               <Text>実包の譲受を記録する</Text>
-            </Link>
+            </Button>
           </View>
           <View style={styles.buttonContainer}>
-            <Link to="/license/new" component={Button}>
+            <Button onPress={() => navigation.navigate("LicenseForm")}>
               <Icon name="receipt" />
               <Text>猟銃用火薬類等譲受証を登録する</Text>
-            </Link>
+            </Button>
           </View>
           <View style={styles.buttonContainer}>
             <Button onPress={onRequestPrint}>
@@ -112,10 +115,10 @@ export function Dashboard(props: Props) {
             <>
               <JournalList items={latestJournals} />
               <View style={styles.buttonContainer}>
-                <Link to="/journals" component={Button}>
+                <Button onPress={() => navigation.navigate("JournalList")}>
                   <Icon name="more-horizontal" />
                   <Text>すべて見る</Text>
-                </Link>
+                </Button>
               </View>
             </>
           ) : (
@@ -128,6 +131,9 @@ export function Dashboard(props: Props) {
     </PageContainer>
   );
 }
+Dashboard.navigationOptions = {
+  title: "実包等管理帳簿"
+};
 
 const styles = StyleSheet.create({
   container: {

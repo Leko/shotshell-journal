@@ -1,7 +1,12 @@
 import React from "react";
-import { NativeRouter, Route, Redirect } from "react-router-native";
-import AppBar from "./containers/AppBar";
-import MemberRoute from "./containers/MemberRoute";
+import { Platform } from "react-native";
+import {
+  createStackNavigator,
+  createDrawerNavigator,
+  createAppContainer
+} from "react-navigation";
+import { Button, Icon } from "@shoutem/ui";
+import AuthLoading from "./containers/AuthLoading";
 import Guest from "./containers/Guest";
 import Login from "./containers/Login";
 import SignUp from "./containers/SignUp";
@@ -12,21 +17,49 @@ import LicenseForm from "./containers/LicenseForm";
 import JournalDetail from "./containers/JournalDetail";
 import JournalList from "./containers/JournalList";
 
-type Props = {};
+const MemberStack = createDrawerNavigator(
+  {
+    Drawer: createStackNavigator(
+      {
+        Dashboard,
+        JournalForm,
+        LicenseForm,
+        JournalList,
+        JournalDetail
+      },
+      {
+        initialRouteName: "Dashboard"
+        // headerMode: "none"
+      }
+    )
+  },
+  {
+    drawerType: "slide",
+    defaultNavigationOptions: ({ navigation }) => ({
+      headerLeft: (
+        <Button onPress={() => navigation.openDrawer()}>
+          <Icon name="sidebar" />
+        </Button>
+      )
+    })
+    // contentComponent: props => <Menu {...props} />,
+  }
+);
 
-export function Routes(props: Props) {
-  return (
-    <NativeRouter>
-      <AppBar />
-      <MemberRoute exact path="/" component={Dashboard} />
-      <Route path="/welcome" component={Guest} />
-      <Route path="/login" component={Login} />
-      <Route path="/signUp" component={SignUp} />
-      <MemberRoute path="/onBoarding" component={OnBoarding} />
-      <MemberRoute path="/journal/new" component={JournalForm} />
-      <MemberRoute path="/license/new" component={LicenseForm} />
-      <MemberRoute exact path="/journals" component={JournalList} />
-      <MemberRoute path="/journals/:id" component={JournalDetail} />
-    </NativeRouter>
-  );
-}
+const RootStack = createStackNavigator(
+  {
+    AuthLoading,
+    MemberStack,
+    Guest,
+    Login,
+    SignUp,
+    OnBoarding
+  },
+  {
+    initialRouteName: "AuthLoading",
+    headerMode: "none",
+    mode: Platform.OS === "ios" ? "modal" : "card"
+  }
+);
+
+export const Routes = createAppContainer(RootStack);

@@ -19,6 +19,8 @@ export const firebaseAuth = (
       );
       store.dispatch(setUser(user));
       firebaseApp.auth().signInAndRetrieveDataWithCredential(credential);
+    } else {
+      store.dispatch(setUser(null));
     }
   });
 

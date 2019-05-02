@@ -27,13 +27,18 @@ function mapDispatchToProps(dispatch: Dispatch<any>) {
       dispatch(fetchJournals());
       dispatch(fetchLicenses());
     },
-    onRequestPrint() {
-      dispatch(generateReport({}));
+    onRequestPrint({ startsAt, endsAt }: { startsAt: Date; endsAt: Date }) {
+      dispatch(
+        generateReport({
+          startsAt,
+          endsAt
+        })
+      );
     }
   };
 }
 
-const withDidMount = lifecycle({
+const withDidMount = lifecycle<{ onLoad: () => void }, {}>({
   componentDidMount() {
     this.props.onLoad();
   }

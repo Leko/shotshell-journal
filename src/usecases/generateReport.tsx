@@ -66,7 +66,7 @@ export const generateReport = ({
     unit: "pixel",
     dpi: 144
   });
-  const { uri, numberOfPages } = await Print.printToFileAsync({
+  const { uri } = await Print.printToFileAsync({
     html,
     width,
     height
