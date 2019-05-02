@@ -21,12 +21,11 @@ function mapStateToProps(state: State) {
     remainingLicenseCount: getRemainingLicenseCount(state)
   };
 }
-function mapDispatchToProps(dispatch: Dispatch<any>, ownProps) {
+function mapDispatchToProps(dispatch: Dispatch<any>) {
   return {
     onLoad() {
       dispatch(fetchJournals());
       dispatch(fetchLicenses());
-      ownProps.navigation.openDrawer();
     },
     onRequestPrint({ startsAt, endsAt }: { startsAt: Date; endsAt: Date }) {
       dispatch(

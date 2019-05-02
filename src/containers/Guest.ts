@@ -15,7 +15,7 @@ function mapDispatchToProps(
   return {
     async onRequestLogin() {
       await dispatch(loginWithGoogle());
-      ownProps.navigation.replace("Dashboard");
+      ownProps.navigation.dangerouslyGetParent()!.navigate("MemberStack");
     }
   };
 }

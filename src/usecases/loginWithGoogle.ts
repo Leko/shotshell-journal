@@ -1,8 +1,10 @@
 import { AnyAction } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { Google } from "expo";
+import * as firebase from "firebase";
 import { State } from "../redux/state";
 import { setUser } from "../redux/store/user/actions";
+import { app } from "../firebase";
 
 // https://blog.expo.io/google-sign-in-with-react-native-and-expo-9cac6c392f0e
 const clientId =
@@ -24,6 +26,13 @@ export const loginWithGoogle = (): ThunkAction<
     if (result.type === "cancel") {
       return;
     }
+
+    // https://firebase.google.com/docs/auth/web/google-signin
+    const credential = firebase.auth.GoogleAuthProvider.credential(
+      result.idToken
+    );
+    await app.auth().signInAndRetrieveDataWithCredential(credential);
+
     dispatch(setUser(result));
   } catch (e) {
     console.error(e);
