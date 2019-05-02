@@ -1,8 +1,7 @@
-import { Dispatch, AnyAction } from "redux";
+import { Dispatch } from "redux";
 import { connect } from "react-redux";
-import { withRouter } from "react-router";
 import { State } from "../redux/state";
-import { AppBar } from "../components/AppBar";
+import { Menu } from "../components/pages/Menu";
 import { getLoggedInUser } from "../redux/selectors/getLoggedInUser";
 
 function mapStateToProps(state: State) {
@@ -10,11 +9,15 @@ function mapStateToProps(state: State) {
     user: getLoggedInUser(state)
   };
 }
-function mapDispatchToProps(dispatch: Dispatch<AnyAction>) {
-  return {};
+function mapDispatchToProps(dispatch: Dispatch<any>) {
+  return {
+    onRequestLogout() {
+      alert("TODO: 実装");
+    }
+  };
 }
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter(AppBar));
+)(Menu);

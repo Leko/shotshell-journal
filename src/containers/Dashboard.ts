@@ -21,19 +21,25 @@ function mapStateToProps(state: State) {
     remainingLicenseCount: getRemainingLicenseCount(state)
   };
 }
-function mapDispatchToProps(dispatch: Dispatch<any>) {
+function mapDispatchToProps(dispatch: Dispatch<any>, ownProps) {
   return {
     onLoad() {
       dispatch(fetchJournals());
       dispatch(fetchLicenses());
+      ownProps.navigation.openDrawer();
     },
-    onRequestPrint() {
-      dispatch(generateReport({}));
+    onRequestPrint({ startsAt, endsAt }: { startsAt: Date; endsAt: Date }) {
+      dispatch(
+        generateReport({
+          startsAt,
+          endsAt
+        })
+      );
     }
   };
 }
 
-const withDidMount = lifecycle({
+const withDidMount = lifecycle<{ onLoad: () => void }, {}>({
   componentDidMount() {
     this.props.onLoad();
   }

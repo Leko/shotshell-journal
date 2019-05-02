@@ -1,7 +1,7 @@
 import { User } from "./state";
 import { SET_USER } from "./types";
 
-export const setUser = (user: User) => ({
+export const setUser = (user: User | null) => ({
   type: SET_USER,
   user
 });

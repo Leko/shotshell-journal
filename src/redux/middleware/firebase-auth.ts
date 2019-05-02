@@ -13,12 +13,18 @@ export const firebaseAuth = (
   SecureStore.getItemAsync(storageKey).then(res => {
     if (res) {
       const user = JSON.parse(res);
+      if (!user) {
+        store.dispatch(setUser(null));
+        return;
+      }
       // https://firebase.google.com/docs/auth/web/google-signin
       const credential = firebase.auth.GoogleAuthProvider.credential(
         user.idToken
       );
       store.dispatch(setUser(user));
       firebaseApp.auth().signInAndRetrieveDataWithCredential(credential);
+    } else {
+      store.dispatch(setUser(null));
     }
   });
 

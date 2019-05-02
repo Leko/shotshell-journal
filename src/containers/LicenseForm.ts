@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import { connect } from "react-redux";
-import { RouteComponentProps } from "react-router";
+import { NavigationScreenProps } from "react-navigation";
 import { withFormik, WithFormikConfig } from "formik";
 import * as Yup from "yup";
 import { State } from "../redux/state";
@@ -8,7 +8,6 @@ import { LicenseForm } from "../components/pages/LicenseForm";
 import { addLicense } from "../usecases/addLicense";
 import { getLicenses } from "../redux/selectors/getLicenses";
 import {
-  License,
   UnsavedLicense,
   getUnlimitedExpiredAt,
   getLimitedExpiredAt
@@ -22,18 +21,18 @@ function mapStateToProps(state: State) {
 
 function mapDispatchToProps(
   dispatch: Dispatch<any>,
-  ownProps: RouteComponentProps
+  ownProps: NavigationScreenProps
 ) {
   return {
     async onSubmit(values: UnsavedLicense) {
       await dispatch(addLicense(values));
-      ownProps.history.goBack();
+      ownProps.navigation.goBack();
     }
   };
 }
 
 const journalForm: WithFormikConfig<
-  RouteComponentProps<{ kind: UnsavedLicense["kind"] }> & {
+  NavigationScreenProps<{ kind: UnsavedLicense["kind"] }> & {
     onSubmit(values: UnsavedLicense): any;
   },
   UnsavedLicense
@@ -55,12 +54,11 @@ const journalForm: WithFormikConfig<
   }),
 
   mapPropsToValues(props) {
-    const { location } = props;
+    const { navigation } = props;
 
-    if (
-      location.state &&
-      (location.state.kind as License["kind"]) === "unlimited"
-    ) {
+    const kind = navigation.getParam("kind", "limited");
+
+    if (kind === "unlimited") {
       return {
         kind: "unlimited",
         purpose: "SHOOTING",

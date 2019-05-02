@@ -8,5 +8,6 @@ export type User = {
 };
 
 export type State = {
+  resolved: boolean;
   rawUser: User | null;
 };

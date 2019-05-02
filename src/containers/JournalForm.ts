@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import { connect } from "react-redux";
-import { RouteComponentProps } from "react-router";
+import { NavigationScreenProps } from "react-navigation";
 import { withFormik, WithFormikConfig } from "formik";
 import * as Yup from "yup";
 import { State } from "../redux/state";
@@ -19,18 +19,18 @@ function mapStateToProps(state: State) {
 
 function mapDispatchToProps(
   dispatch: Dispatch<any>,
-  ownProps: RouteComponentProps
+  ownProps: NavigationScreenProps
 ) {
   return {
     async onSubmit(values: UnsavedJournal) {
       await dispatch(addJournal(values));
-      ownProps.history.goBack();
+      ownProps.navigation.goBack();
     }
   };
 }
 
 const journalForm: WithFormikConfig<
-  RouteComponentProps<{ kind: UnsavedJournal["kind"] }> & {
+  NavigationScreenProps<{ kind: UnsavedJournal["kind"] }> & {
     licenses: License[];
     onSubmit(values: UnsavedJournal): any;
   },
@@ -49,9 +49,10 @@ const journalForm: WithFormikConfig<
   }),
 
   mapPropsToValues(props) {
-    const { licenses, location } = props;
+    const { licenses, navigation } = props;
 
-    if ((location.state.kind as Journal["kind"]) === "consume") {
+    const kind = navigation.getParam("kind", "consume");
+    if (kind === "consume") {
       return {
         date: new Date(),
         kind: "consume",

@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet } from "react-native";
-import { Link } from "react-router-native";
+import { NavigationScreenProps } from "react-navigation";
 import { Toggle } from "react-powerplug";
 import RNPickerSelect from "react-native-picker-select";
 import DateTimePicker from "react-native-modal-datetime-picker";
@@ -29,7 +29,7 @@ const purposeToLanguage = {
   HUNTING: "狩猟"
 };
 
-export function JournalForm(props: Props) {
+export function JournalForm(props: Props & NavigationScreenProps) {
   const {
     licenses,
     values,
@@ -39,7 +39,8 @@ export function JournalForm(props: Props) {
     isSubmitting,
     handleSubmit,
     setFieldValue,
-    setFieldTouched
+    setFieldTouched,
+    navigation
   } = props;
   const canSubmit = isValid && !isSubmitting;
 
@@ -114,14 +115,13 @@ export function JournalForm(props: Props) {
               title="譲受許可証が登録されていません"
               body="譲受許可証を登録していただくと記録できるようになります"
               renderAction={() => (
-                <Link
-                  to="/license/new"
-                  component={Button}
+                <Button
+                  onPress={() => navigation.navigate("LicenseForm")}
                   styleName="secondary"
                 >
                   <Icon name="receipt" />
                   <Text>猟銃用火薬類等譲受証を登録する</Text>
-                </Link>
+                </Button>
               )}
             />
           ) : licenses.length === 1 ? (

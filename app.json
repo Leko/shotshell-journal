@@ -4,7 +4,10 @@
     "slug": "shellshot-journal",
     "privacy": "public",
     "sdkVersion": "32.0.0",
-    "platforms": ["ios", "android"],
+    "platforms": [
+      "ios",
+      "android"
+    ],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -16,19 +19,15 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "jp.leko.shellshot-journal",
-      "config": {
-        "googleSignIn": {
-          "reservedClientId": "com.googleusercontent.apps.630184827238-ks3mlsbb4c0osu4tpeslao3alatn2ffc"
-        }
-      }
     },
     "android": {
       "package": "jp.leko.shellshotjournal",
-      "googleServicesFile": "./src/firebase/google-services.json"
     }
   }
 }
