@@ -1,5 +1,6 @@
 import React from "react";
 import { Font, AppLoading } from "expo";
+import { YellowBox } from "react-native";
 import { Provider } from "react-redux";
 import { StyleProvider } from "@shoutem/theme";
 import { Routes } from "./src/Routes";
@@ -7,6 +8,9 @@ import { createStore } from "./src/redux";
 import { theme } from "./src/theme";
 
 const store = createStore();
+
+// FIXME: Remove this line
+YellowBox.ignoreWarnings(["Require cycle:"]);
 
 export default class App extends React.Component {
   state = {

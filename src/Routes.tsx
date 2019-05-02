@@ -1,12 +1,14 @@
 import React from "react";
-import { Platform } from "react-native";
 import {
   createStackNavigator,
   createDrawerNavigator,
-  createAppContainer
+  createSwitchNavigator,
+  createAppContainer,
+  NavigationScreenProps
 } from "react-navigation";
 import { Button, Icon } from "@shoutem/ui";
 import AuthLoading from "./containers/AuthLoading";
+import Menu from "./containers/Menu";
 import Guest from "./containers/Guest";
 import Login from "./containers/Login";
 import SignUp from "./containers/SignUp";
@@ -17,49 +19,86 @@ import LicenseForm from "./containers/LicenseForm";
 import JournalDetail from "./containers/JournalDetail";
 import JournalList from "./containers/JournalList";
 
+const GuestStack = createStackNavigator(
+  {
+    Guest,
+    Login,
+    SignUp
+  },
+  {
+    initialRouteName: "Guest"
+  }
+);
+
 const MemberStack = createDrawerNavigator(
   {
     Drawer: createStackNavigator(
       {
-        Dashboard,
-        JournalForm,
-        LicenseForm,
-        JournalList,
-        JournalDetail
+        OnBoarding: {
+          screen: OnBoarding,
+          navigationOptions: {
+            title: "TODO"
+          }
+        },
+
+        Dashboard: {
+          screen: Dashboard,
+          navigationOptions: ({ navigation }: NavigationScreenProps) => ({
+            title: "実包等管理帳簿",
+            headerLeft: () => (
+              <Button onPress={() => navigation.openDrawer()}>
+                <Icon name="sidebar" />
+              </Button>
+            )
+          })
+        },
+        JournalForm: {
+          screen: JournalForm,
+          navigationOptions: {
+            title: "記録する"
+          }
+        },
+        LicenseForm: {
+          screen: LicenseForm,
+          navigationOptions: {
+            title: "譲受許可証を登録する"
+          }
+        },
+        JournalList: {
+          screen: JournalList,
+          navigationOptions: {
+            title: "使用・譲受一覧"
+          }
+        },
+        JournalDetail: {
+          screen: JournalDetail,
+          navigationOptions: {
+            title: "TODO: To be dynamic"
+          }
+        }
       },
       {
-        initialRouteName: "Dashboard"
-        // headerMode: "none"
+        initialRouteName: "Dashboard",
+        defaultNavigationOptions: ({ navigation }) => ({
+          headerBackTitle: null,
+          headerBackImage: (
+            <Button onPress={() => navigation.goBack()}>
+              <Icon name="left-arrow" />
+            </Button>
+          )
+        })
       }
     )
   },
   {
-    drawerType: "slide",
-    defaultNavigationOptions: ({ navigation }) => ({
-      headerLeft: (
-        <Button onPress={() => navigation.openDrawer()}>
-          <Icon name="sidebar" />
-        </Button>
-      )
-    })
-    // contentComponent: props => <Menu {...props} />,
+    contentComponent: Menu
   }
 );
 
-const RootStack = createStackNavigator(
-  {
-    AuthLoading,
-    MemberStack,
-    Guest,
-    Login,
-    SignUp,
-    OnBoarding
-  },
-  {
-    initialRouteName: "AuthLoading",
-    headerMode: "none",
-    mode: Platform.OS === "ios" ? "modal" : "card"
-  }
-);
+const RootStack = createSwitchNavigator({
+  AuthLoading,
+  GuestStack,
+  MemberStack
+});
 
 export const Routes = createAppContainer(RootStack);

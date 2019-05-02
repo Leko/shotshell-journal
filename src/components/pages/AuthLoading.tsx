@@ -8,7 +8,7 @@ type Props = {
 export function AuthLoading(props: Props & NavigationScreenProps) {
   const { authenticating, authenticated, navigation } = props;
   if (!authenticating) {
-    navigation.replace(authenticated ? "MemberStack" : "Guest");
+    navigation.navigate(authenticated ? "MemberStack" : "GuestStack");
   }
 
   return null;

@@ -12,7 +12,8 @@ export function PageContainer(props: Props) {
 
   return (
     <Screen>
-      <KeyboardAwareScrollView>
+      {/* https://github.com/facebook/react-native/issues/19658#issuecomment-423814249 */}
+      <KeyboardAwareScrollView contentInsetAdjustmentBehavior="automatic">
         <SafeAreaView>{children}</SafeAreaView>
       </KeyboardAwareScrollView>
     </Screen>

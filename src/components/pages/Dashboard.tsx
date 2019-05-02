@@ -81,7 +81,7 @@ export function Dashboard(props: Props & NavigationScreenProps) {
               disabled={!hasLicense}
             >
               <Icon name="minus-button" />
-              <Text>実包の消費を記録する</Text>
+              <Text>消費・使用を記録する</Text>
             </Button>
           </View>
           <View style={styles.buttonContainer}>
@@ -93,7 +93,7 @@ export function Dashboard(props: Props & NavigationScreenProps) {
               disabled={!hasLicense}
             >
               <Icon name="plus-button" />
-              <Text>実包の譲受を記録する</Text>
+              <Text>譲受・購入を記録する</Text>
             </Button>
           </View>
           <View style={styles.buttonContainer}>
@@ -131,9 +131,6 @@ export function Dashboard(props: Props & NavigationScreenProps) {
     </PageContainer>
   );
 }
-Dashboard.navigationOptions = {
-  title: "実包等管理帳簿"
-};
 
 const styles = StyleSheet.create({
   container: {
