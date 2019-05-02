@@ -10,7 +10,7 @@ import { getRemaining } from "../redux/selectors/getRemaining";
 import { getRemainingLicenseCount } from "../redux/selectors/getRemainingLicenseCount";
 import { fetchJournals } from "../usecases/fetchJournals";
 import { fetchLicenses } from "../usecases/fetchLicenses";
-import { app } from "../firebase";
+import { generateReport } from "../usecases/generateReport";
 
 function mapStateToProps(state: State) {
   return {
@@ -26,6 +26,9 @@ function mapDispatchToProps(dispatch: Dispatch<any>) {
     onLoad() {
       dispatch(fetchJournals());
       dispatch(fetchLicenses());
+    },
+    onRequestPrint() {
+      dispatch(generateReport({}));
     }
   };
 }

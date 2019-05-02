@@ -23,6 +23,7 @@ type Props = {
   latestJournals: Journal[];
   remaining: number | null;
   remainingLicenseCount: number | null;
+  onRequestPrint: () => any;
 };
 
 export function Dashboard(props: Props) {
@@ -31,7 +32,8 @@ export function Dashboard(props: Props) {
     remaining,
     remainingLicenseCount,
     limitedLicense,
-    latestJournals
+    latestJournals,
+    onRequestPrint
   } = props;
 
   return (
@@ -98,10 +100,10 @@ export function Dashboard(props: Props) {
             </Link>
           </View>
           <View style={styles.buttonContainer}>
-            <Link to="/examine/new" component={Button}>
-              <Icon name="add-event" />
-              <Text>銃検日を登録する</Text>
-            </Link>
+            <Button onPress={onRequestPrint}>
+              <Icon name="page" />
+              <Text>管理帳簿を印刷する</Text>
+            </Button>
           </View>
         </View>
         <View style={{ marginTop: 16 }}>
