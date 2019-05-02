@@ -11,26 +11,27 @@ export const firebaseAuth = (
   firebaseApp: firebase.app.App
 ): Middleware<{}, State, Dispatch<AnyAction>> => store => {
   SecureStore.getItemAsync(storageKey).then(res => {
-    if (res) {
-      const user = JSON.parse(res);
-      if (!user) {
-        store.dispatch(setUser(null));
-        return;
-      }
-      // https://firebase.google.com/docs/auth/web/google-signin
-      const credential = firebase.auth.GoogleAuthProvider.credential(
-        user.idToken
-      );
-      store.dispatch(setUser(user));
-      firebaseApp.auth().signInAndRetrieveDataWithCredential(credential);
-    } else {
+    const user = res ? JSON.parse(res) : null;
+    if (!user) {
       store.dispatch(setUser(null));
+      return;
     }
+    // https://firebase.google.com/docs/auth/web/google-signin
+    const credential = firebase.auth.GoogleAuthProvider.credential(
+      user.idToken
+    );
+    store.dispatch(setUser(user));
+    firebaseApp.auth().signInAndRetrieveDataWithCredential(credential);
   });
 
   return next => action => {
     if (action.type === SET_USER) {
-      SecureStore.setItemAsync(storageKey, JSON.stringify(action.user));
+      if (action.user) {
+        SecureStore.setItemAsync(storageKey, JSON.stringify(action.user));
+      } else {
+        SecureStore.deleteItemAsync(storageKey);
+        firebaseApp.auth().signOut();
+      }
     }
     return next(action);
   };
