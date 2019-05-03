@@ -83,24 +83,6 @@ export function Menu(props: Props & NavigationScreenProps) {
             <Text>利用規約</Text>
           </Button>
           <Button
-            onPress={() => alert("TODO: 実装")}
-            styleName="clear full-width action"
-            style={{ justifyContent: "flex-start" }}
-          >
-            <Icon name="about" />
-            <Text>プライバシーポリシー</Text>
-          </Button>
-          {hasCarryOver === true ? (
-            <Button
-              onPress={() => alert("TODO: 実装")}
-              styleName="clear full-width action"
-              style={{ justifyContent: "flex-start" }}
-            >
-              <Icon name="settings" />
-              <Text>設定</Text>
-            </Button>
-          ) : null}
-          <Button
             onPress={onRequestLogout}
             styleName="clear full-width action"
             style={{ justifyContent: "flex-start" }}
