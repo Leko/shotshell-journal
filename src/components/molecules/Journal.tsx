@@ -1,14 +1,16 @@
 import React from "react";
-import { StyleSheet } from "react-native";
-import { Tile, View, Subtitle, Caption } from "@shoutem/ui";
+import { StyleSheet, TouchableOpacity } from "react-native";
+import { Icon, Tile, View, Subtitle, Caption } from "@shoutem/ui";
 import { Journal as JournalModel } from "../../models/Journal";
 
 type Props = {
   journal: JournalModel;
+  onRequestEdit: () => any;
+  onRequestRemove: () => any;
 };
 
 export function Journal(props: Props) {
-  const { journal } = props;
+  const { journal, onRequestEdit, onRequestRemove } = props;
 
   const monthDayFormatter = new Intl.DateTimeFormat("ja", {
     year: "numeric",
@@ -37,6 +39,28 @@ export function Journal(props: Props) {
           >
             <View styleName="horizontal">
               <Caption>{monthDayFormatter.format(journal.date)}</Caption>
+              <TouchableOpacity
+                onPress={onRequestEdit}
+                style={{ padding: 4, marginLeft: 4 }}
+              >
+                <Icon
+                  name="edit"
+                  style={{
+                    fontSize: 18
+                  }}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={onRequestRemove}
+                style={{ padding: 4, marginLeft: 4 }}
+              >
+                <Icon
+                  name="clear-text"
+                  style={{
+                    fontSize: 18
+                  }}
+                />
+              </TouchableOpacity>
             </View>
           </View>
         </View>

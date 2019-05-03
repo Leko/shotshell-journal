@@ -1,7 +1,8 @@
 import { State } from "./state";
 import { Action } from "./actions";
 import {
-  ADD_JOURNAL,
+  SET_JOURNAL,
+  REMOVE_JOURNAL,
   FETCH_JOURNALS_STARTED,
   FETCH_JOURNALS_SUCCEED,
   FETCH_JOURNALS_FAILED
@@ -14,7 +15,7 @@ const initialState: State = {
 
 export function reducer(state: State = initialState, action: Action) {
   switch (action.type) {
-    case ADD_JOURNAL:
+    case SET_JOURNAL:
       return {
         ...state,
         journals: {
@@ -22,6 +23,13 @@ export function reducer(state: State = initialState, action: Action) {
           [action.journal.id]: action.journal
         }
       };
+    case REMOVE_JOURNAL: {
+      const { [action.id]: removed, ...others } = state.journals;
+      return {
+        ...state,
+        journals: others
+      };
+    }
     case FETCH_JOURNALS_STARTED:
       return { ...state, error: null, journals: {} };
     case FETCH_JOURNALS_SUCCEED:

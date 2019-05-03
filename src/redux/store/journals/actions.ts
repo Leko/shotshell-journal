@@ -1,14 +1,20 @@
 import { Journal } from "../../../models/Journal";
 import {
-  ADD_JOURNAL,
+  SET_JOURNAL,
+  REMOVE_JOURNAL,
   FETCH_JOURNALS_STARTED,
   FETCH_JOURNALS_SUCCEED,
   FETCH_JOURNALS_FAILED
 } from "./types";
 
 export const addJournal = (journal: Journal) => ({
-  type: ADD_JOURNAL,
+  type: SET_JOURNAL,
   journal
+});
+
+export const removeJournal = (id: string) => ({
+  type: REMOVE_JOURNAL,
+  id
 });
 
 export const fetchJournalsStart = () => ({
@@ -25,6 +31,7 @@ export const fetchJournalsFailed = (error: Error) => ({
 
 export type Action =
   | ReturnType<typeof addJournal>
+  | ReturnType<typeof removeJournal>
   | ReturnType<typeof fetchJournalsStart>
   | ReturnType<typeof fetchJournalsSuccess>
   | ReturnType<typeof fetchJournalsFailed>;

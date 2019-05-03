@@ -16,6 +16,7 @@ import CarryOverForm from "./containers/CarryOverForm";
 import Dashboard from "./containers/Dashboard";
 import ConfirmPrint from "./containers/ConfirmPrint";
 import JournalForm from "./containers/JournalForm";
+import JournalEditForm from "./containers/JournalEditForm";
 import LicenseForm from "./containers/LicenseForm";
 import JournalDetail from "./containers/JournalDetail";
 import JournalList from "./containers/JournalList";
@@ -62,6 +63,12 @@ const MemberStack = createDrawerNavigator(
           screen: JournalForm,
           navigationOptions: {
             title: "記録する"
+          }
+        },
+        JournalEditForm: {
+          screen: JournalEditForm,
+          navigationOptions: {
+            title: "記録を編集する"
           }
         },
         LicenseForm: {

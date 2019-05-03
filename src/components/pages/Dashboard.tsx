@@ -23,6 +23,8 @@ type Props = {
   latestJournals: Journal[];
   remaining: number | null;
   remainingLicenseCount: number | null;
+  onRequestEdit: (item: Journal) => any;
+  onRequestRemove: (item: Journal) => any;
 };
 
 export function Dashboard(props: Props & NavigationScreenProps) {
@@ -32,7 +34,9 @@ export function Dashboard(props: Props & NavigationScreenProps) {
     remainingLicenseCount,
     limitedLicense,
     latestJournals,
-    navigation
+    navigation,
+    onRequestEdit,
+    onRequestRemove
   } = props;
 
   return (
@@ -128,7 +132,11 @@ export function Dashboard(props: Props & NavigationScreenProps) {
               <Heading>最近の記録</Heading>
               {latestJournals.length > 0 ? (
                 <>
-                  <JournalList items={latestJournals} />
+                  <JournalList
+                    items={latestJournals}
+                    onRequestEdit={onRequestEdit}
+                    onRequestRemove={onRequestRemove}
+                  />
                   <View style={styles.buttonContainer}>
                     <Button onPress={() => navigation.navigate("JournalList")}>
                       <Icon name="more-horizontal" />

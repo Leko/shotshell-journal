@@ -1,5 +1,7 @@
 import { Dispatch } from "redux";
+import { Alert } from "react-native";
 import { connect } from "react-redux";
+import { NavigationScreenProps } from "react-navigation";
 import { lifecycle } from "recompose";
 import { State } from "../redux/state";
 import { Dashboard } from "../components/pages/Dashboard";
@@ -12,6 +14,8 @@ import { fetchJournals } from "../usecases/fetchJournals";
 import { fetchLicenses } from "../usecases/fetchLicenses";
 import { fetchExamines } from "../usecases/fetchExamines";
 import { fetchCarryOver } from "../usecases/fetchCarryOver";
+import { removeJournal } from "../usecases/removeJournal";
+import { Journal } from "../models/Journal";
 
 function mapStateToProps(state: State) {
   return {
@@ -22,13 +26,37 @@ function mapStateToProps(state: State) {
     remainingLicenseCount: getRemainingLicenseCount(state)
   };
 }
-function mapDispatchToProps(dispatch: Dispatch<any>) {
+function mapDispatchToProps(
+  dispatch: Dispatch<any>,
+  ownProps: NavigationScreenProps
+) {
   return {
     onLoad() {
       dispatch(fetchJournals());
       dispatch(fetchLicenses());
       dispatch(fetchExamines());
       dispatch(fetchCarryOver());
+    },
+    onRequestEdit(journal: Journal) {
+      ownProps.navigation.navigate("JournalEditForm", {
+        id: journal.id,
+        initialValues: journal
+      });
+    },
+    onRequestRemove(journal: Journal) {
+      Alert.alert("本当によろしいですか？", "この操作は元に戻せません", [
+        {
+          text: "削除する",
+          onPress: () => {
+            dispatch(removeJournal(journal));
+          },
+          style: "destructive"
+        },
+        {
+          text: "キャンセル",
+          style: "cancel"
+        }
+      ]);
     }
   };
 }
