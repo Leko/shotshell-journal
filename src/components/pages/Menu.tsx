@@ -75,7 +75,7 @@ export function Menu(props: Props & NavigationScreenProps) {
             <Text>ヘルプ</Text>
           </Button>
           <Button
-            onPress={() => alert("TODO: 実装")}
+            onPress={() => navigation.navigate("Terms")}
             styleName="clear full-width action"
             style={{ justifyContent: "flex-start" }}
           >

@@ -10,3 +10,4 @@ src/firebase/google-services.json
 dist
 node_modules
 .vscode/
+.firebase

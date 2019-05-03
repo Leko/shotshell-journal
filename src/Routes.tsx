@@ -20,6 +20,7 @@ import JournalEditForm from "./containers/JournalEditForm";
 import LicenseForm from "./containers/LicenseForm";
 import JournalDetail from "./containers/JournalDetail";
 import JournalList from "./containers/JournalList";
+import { Terms } from "./components/pages/Terms";
 
 const GuestStack = createStackNavigator(
   {
@@ -36,6 +37,13 @@ const MemberStack = createDrawerNavigator(
   {
     Drawer: createStackNavigator(
       {
+        Terms: {
+          screen: Terms,
+          navigationOptions: {
+            title: "利用規約"
+          }
+        },
+
         Dashboard: {
           screen: Dashboard,
           navigationOptions: ({ navigation }: NavigationScreenProps) => ({

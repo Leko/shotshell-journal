@@ -1,6 +1,10 @@
 {
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
+    "deploy": "npm run deploy:expo && npm run deploy:firebase",
+    "deploy:expo": "expo publish",
+    "deploy:firebase": "firebase deploy --only hosting",
+    "predeploy:firebase": "npx ordinance-format-jp src/terms.md > public/terms.html",
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
