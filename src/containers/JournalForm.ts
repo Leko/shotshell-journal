@@ -9,11 +9,12 @@ import { JournalForm } from "../components/pages/JournalForm";
 import { addJournal } from "../usecases/addJournal";
 import { getLicenses } from "../redux/selectors/getLicenses";
 import { License } from "../models/License";
-import { Journal } from "../models/Journal";
+import { getJournals } from "../redux/selectors/getJournals";
 
 function mapStateToProps(state: State) {
   return {
-    licenses: getLicenses(state)
+    licenses: getLicenses(state),
+    journals: getJournals(state)
   };
 }
 

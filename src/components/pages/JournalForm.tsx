@@ -1,4 +1,6 @@
 import React from "react";
+import sortBy from "lodash/sortBy";
+import uniq from "lodash/uniq";
 import { StyleSheet } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { Toggle } from "react-powerplug";
@@ -7,6 +9,8 @@ import DateTimePicker from "react-native-modal-datetime-picker";
 import {
   View,
   Text,
+  Subtitle,
+  Caption,
   Button,
   Icon,
   Heading,
@@ -15,6 +19,7 @@ import {
 } from "@shoutem/ui";
 import { FormikProps } from "formik";
 import { License } from "../../models/License";
+import { Journal } from "../../models/Journal";
 import { UnsavedJournal } from "../../models/Journal";
 import { Notice } from "../molecules/Notice";
 import { PageContainer } from "../molecules/PageContainer";
@@ -22,6 +27,7 @@ import { ValidationError } from "../atoms/ValidationError";
 
 type Props = {
   licenses: License[];
+  journals: Journal[];
 } & FormikProps<UnsavedJournal>;
 
 const purposeToLanguage = {
@@ -32,6 +38,7 @@ const purposeToLanguage = {
 export function JournalForm(props: Props & NavigationScreenProps) {
   const {
     licenses,
+    journals,
     values,
     touched,
     errors,
@@ -66,6 +73,12 @@ export function JournalForm(props: Props & NavigationScreenProps) {
         ]
     ).join("-");
 
+  const histories = uniq(
+    sortBy(
+      journals.filter(j => j.kind === values.kind),
+      j => -j.createdAt.getTime()
+    ).map(j => (j.kind === "receive" ? j.transferrer : j.place))
+  ).slice(0, 5);
   const licensesToSelect = licenses.map(l => ({
     value: l,
     label: stringify(l)
@@ -202,6 +215,7 @@ export function JournalForm(props: Props & NavigationScreenProps) {
             <>
               <Title>譲り渡し人</Title>
               <TextInput
+                value={values.transferrer}
                 onBlur={() => {
                   setFieldTouched("transferrer");
                 }}
@@ -209,6 +223,26 @@ export function JournalForm(props: Props & NavigationScreenProps) {
                   setFieldValue("transferrer", text);
                 }}
               />
+              {histories.length ? (
+                <View style={{ marginLeft: 16, marginTop: 8 }}>
+                  <View styleName="horizontal" style={{ alignItems: "center" }}>
+                    <Icon name="history" />
+                    <Text>入力履歴から入力</Text>
+                  </View>
+                  {histories.map(transferrer => (
+                    <View key={transferrer} style={{ marginBottom: 4 }}>
+                      <Button
+                        style={{ justifyContent: "flex-start" }}
+                        onPress={() =>
+                          setFieldValue("transferrer", transferrer)
+                        }
+                      >
+                        <Caption>{transferrer}</Caption>
+                      </Button>
+                    </View>
+                  ))}
+                </View>
+              ) : null}
               <ValidationError
                 field="transferrer"
                 errors={errors}
@@ -219,6 +253,7 @@ export function JournalForm(props: Props & NavigationScreenProps) {
             <>
               <Title>使用場所</Title>
               <TextInput
+                value={values.place}
                 onBlur={() => {
                   setFieldTouched("place");
                 }}
@@ -226,6 +261,24 @@ export function JournalForm(props: Props & NavigationScreenProps) {
                   setFieldValue("place", text);
                 }}
               />
+              {histories.length ? (
+                <View style={{ marginLeft: 16, marginTop: 8 }}>
+                  <View styleName="horizontal" style={{ alignItems: "center" }}>
+                    <Icon name="history" />
+                    <Text>入力履歴から入力</Text>
+                  </View>
+                  {histories.map(place => (
+                    <View key={place} style={{ marginBottom: 4 }}>
+                      <Button
+                        style={{ justifyContent: "flex-start" }}
+                        onPress={() => setFieldValue("place", place)}
+                      >
+                        <Caption>{place}</Caption>
+                      </Button>
+                    </View>
+                  ))}
+                </View>
+              ) : null}
               <ValidationError
                 field="place"
                 errors={errors}
