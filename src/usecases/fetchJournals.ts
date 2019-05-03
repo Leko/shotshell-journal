@@ -3,7 +3,6 @@ import { ThunkAction } from "redux-thunk";
 import { State } from "../redux/state";
 import {
   fetchJournalsStart,
-  fetchJournalsFailed,
   fetchJournalsSuccess
 } from "../redux/store/journals/actions";
 import { app } from "../firebase";
@@ -23,25 +22,20 @@ export const fetchJournals = (): ThunkAction<
     return;
   }
 
-  try {
-    const snapshot = await app
-      .firestore()
-      .collection("journals")
-      .where("userId", "==", user.id)
-      .get();
-    const journals: Record<string, Journal> = {};
-    snapshot.forEach(docSnapshot => {
-      journals[docSnapshot.id] = {
-        ...(docSnapshot.data() as Journal),
-        id: docSnapshot.id,
-        date: (docSnapshot.data()
-          .date as firebase.firestore.Timestamp).toDate(),
-        createdAt: (docSnapshot.data()
-          .createdAt as firebase.firestore.Timestamp).toDate()
-      };
-    });
-    dispatch(fetchJournalsSuccess(journals));
-  } catch (e) {
-    dispatch(fetchJournalsFailed(e));
-  }
+  const snapshot = await app
+    .firestore()
+    .collection("journals")
+    .where("userId", "==", user.id)
+    .get();
+  const journals: Record<string, Journal> = {};
+  snapshot.forEach(docSnapshot => {
+    journals[docSnapshot.id] = {
+      ...(docSnapshot.data() as Journal),
+      id: docSnapshot.id,
+      date: (docSnapshot.data().date as firebase.firestore.Timestamp).toDate(),
+      createdAt: (docSnapshot.data()
+        .createdAt as firebase.firestore.Timestamp).toDate()
+    };
+  });
+  dispatch(fetchJournalsSuccess(journals));
 };

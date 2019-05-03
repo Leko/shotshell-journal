@@ -180,6 +180,9 @@ export function LicenseForm(props: Props) {
                   setFieldTouched("amount");
                 }}
                 onChangeText={(text: string) => {
+                  if (isNaN(parseInt(text, 10))) {
+                    return;
+                  }
                   setFieldValue("amount", parseInt(text, 10));
                 }}
               />
@@ -199,6 +202,9 @@ export function LicenseForm(props: Props) {
                   setFieldTouched("gauge");
                 }}
                 onChangeText={(text: string) => {
+                  if (isNaN(parseInt(text, 10))) {
+                    return;
+                  }
                   setFieldValue("gauge", parseInt(text, 10));
                 }}
               />

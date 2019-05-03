@@ -12,8 +12,9 @@ import Menu from "./containers/Menu";
 import Guest from "./containers/Guest";
 import Login from "./containers/Login";
 import SignUp from "./containers/SignUp";
-import OnBoarding from "./containers/OnBoarding";
+import CarryOverForm from "./containers/CarryOverForm";
 import Dashboard from "./containers/Dashboard";
+import ConfirmPrint from "./containers/ConfirmPrint";
 import JournalForm from "./containers/JournalForm";
 import LicenseForm from "./containers/LicenseForm";
 import JournalDetail from "./containers/JournalDetail";
@@ -34,13 +35,6 @@ const MemberStack = createDrawerNavigator(
   {
     Drawer: createStackNavigator(
       {
-        OnBoarding: {
-          screen: OnBoarding,
-          navigationOptions: {
-            title: "TODO"
-          }
-        },
-
         Dashboard: {
           screen: Dashboard,
           navigationOptions: ({ navigation }: NavigationScreenProps) => ({
@@ -51,6 +45,18 @@ const MemberStack = createDrawerNavigator(
               </Button>
             )
           })
+        },
+        CarryOverForm: {
+          screen: CarryOverForm,
+          navigationOptions: {
+            title: "初期設定"
+          }
+        },
+        ConfirmPrint: {
+          screen: ConfirmPrint,
+          navigationOptions: {
+            title: "管理帳簿を印刷する"
+          }
         },
         JournalForm: {
           screen: JournalForm,

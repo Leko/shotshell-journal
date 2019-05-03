@@ -14,11 +14,12 @@ import { User } from "../../models/User";
 
 type Props = {
   user: User | null;
+  hasCarryOver: boolean;
   onRequestLogout: () => any;
 };
 
 export function Menu(props: Props & NavigationScreenProps) {
-  const { user, navigation, onRequestLogout } = props;
+  const { user, hasCarryOver, navigation, onRequestLogout } = props;
   return (
     <PageContainer>
       <View style={{ flex: 1 }}>
@@ -41,24 +42,26 @@ export function Menu(props: Props & NavigationScreenProps) {
             <Divider styleName="line" />
           </>
         ) : null}
-        <View style={{ flex: 1 }}>
-          <Button
-            onPress={() => navigation.navigate("JournalList")}
-            styleName="clear full-width action"
-            style={{ justifyContent: "flex-start" }}
-          >
-            <Icon name="page" />
-            <Text>記録一覧</Text>
-          </Button>
-          <Button
-            onPress={() => alert("TODO: 実装")}
-            styleName="clear full-width action"
-            style={{ justifyContent: "flex-start" }}
-          >
-            <Icon name="page" />
-            <Text>譲受許可証一覧</Text>
-          </Button>
-        </View>
+        {hasCarryOver === true ? (
+          <View style={{ flex: 1 }}>
+            <Button
+              onPress={() => navigation.navigate("JournalList")}
+              styleName="clear full-width action"
+              style={{ justifyContent: "flex-start" }}
+            >
+              <Icon name="page" />
+              <Text>記録一覧</Text>
+            </Button>
+            <Button
+              onPress={() => alert("TODO: 実装")}
+              styleName="clear full-width action"
+              style={{ justifyContent: "flex-start" }}
+            >
+              <Icon name="page" />
+              <Text>譲受許可証一覧</Text>
+            </Button>
+          </View>
+        ) : null}
 
         <View style={{ flex: 1 }}>
           <Divider styleName="line" />
@@ -87,14 +90,16 @@ export function Menu(props: Props & NavigationScreenProps) {
             <Icon name="about" />
             <Text>プライバシーポリシー</Text>
           </Button>
-          <Button
-            onPress={() => alert("TODO: 実装")}
-            styleName="clear full-width action"
-            style={{ justifyContent: "flex-start" }}
-          >
-            <Icon name="settings" />
-            <Text>設定</Text>
-          </Button>
+          {hasCarryOver === true ? (
+            <Button
+              onPress={() => alert("TODO: 実装")}
+              styleName="clear full-width action"
+              style={{ justifyContent: "flex-start" }}
+            >
+              <Icon name="settings" />
+              <Text>設定</Text>
+            </Button>
+          ) : null}
           <Button
             onPress={onRequestLogout}
             styleName="clear full-width action"

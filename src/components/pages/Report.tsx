@@ -3,6 +3,8 @@ import { Journal } from "../../models/Journal";
 import { License, getPurposeName } from "../../models/License";
 
 type Props = {
+  remaining: number;
+  startsAt: Date;
   journals: Journal[];
   licenses: Record<string, License>;
 };
@@ -43,7 +45,7 @@ const schema = {
 };
 
 export function Report(props: Props) {
-  const { journals, licenses } = props;
+  const { journals, licenses, startsAt, remaining } = props;
 
   const dateFormatter = new Intl.DateTimeFormat("ja-JP-u-ca-japanese", {
     era: "narrow"
@@ -69,6 +71,32 @@ export function Report(props: Props) {
           ))}
         </thead>
         <tbody>
+          {remaining > 0 ? (
+            <tr>
+              <td>{dateFormatter.format(startsAt)}</td>
+              <td>-</td>
+              <td>前葉繰り越し</td>
+              <td>-</td>
+              <td>{remaining}</td>
+              <td>-</td>
+              {/* ライフル未対応 */}
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              {/* 空砲未対応 */}
+              <td>-</td>
+              <td>-</td>
+              <td>{remaining}</td>
+              {/* 雷管未対応 */}
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              {/* 火薬未対応 */}
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+            </tr>
+          ) : null}
           {journals.map(journal => {
             const license = licenses[journal.licenseId];
             if (!license) {

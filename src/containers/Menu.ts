@@ -5,11 +5,13 @@ import { connect } from "react-redux";
 import { State } from "../redux/state";
 import { Menu } from "../components/pages/Menu";
 import { getLoggedInUser } from "../redux/selectors/getLoggedInUser";
+import { getCarryOver } from "../redux/selectors/getCarryOver";
 import { logout } from "../usecases/logout";
 
 function mapStateToProps(state: State) {
   return {
-    user: getLoggedInUser(state)
+    user: getLoggedInUser(state),
+    hasCarryOver: !!getCarryOver(state)
   };
 }
 function mapDispatchToProps(

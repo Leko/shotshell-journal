@@ -3,7 +3,6 @@ import { ThunkAction } from "redux-thunk";
 import { State } from "../redux/state";
 import {
   fetchLicensesStart,
-  fetchLicensesFailed,
   fetchLicensesSuccess
 } from "../redux/store/licenses/actions";
 import { app } from "../firebase";
@@ -23,29 +22,25 @@ export const fetchLicenses = (): ThunkAction<
     return;
   }
 
-  try {
-    const snapshot = await app
-      .firestore()
-      .collection("licenses")
-      .where("userId", "==", user.id)
-      .get();
-    const licenses: Record<string, License> = {};
-    snapshot.forEach(docSnapshot => {
-      const data: License = docSnapshot.data();
-      licenses[docSnapshot.id] = {
-        ...data,
-        id: docSnapshot.id,
-        createdAt: ((data.createdAt as unknown) as firebase.firestore.Timestamp).toDate(),
-        startsAt: ((data.startsAt as unknown) as firebase.firestore.Timestamp).toDate()
-      };
-      if (data.kind === "limited") {
-        licenses[
-          docSnapshot.id
-        ].expiredAt = ((data.expiredAt as unknown) as firebase.firestore.Timestamp).toDate();
-      }
-    });
-    dispatch(fetchLicensesSuccess(licenses));
-  } catch (e) {
-    dispatch(fetchLicensesFailed(e));
-  }
+  const snapshot = await app
+    .firestore()
+    .collection("licenses")
+    .where("userId", "==", user.id)
+    .get();
+  const licenses: Record<string, License> = {};
+  snapshot.forEach(docSnapshot => {
+    const data: License = docSnapshot.data();
+    licenses[docSnapshot.id] = {
+      ...data,
+      id: docSnapshot.id,
+      createdAt: ((data.createdAt as unknown) as firebase.firestore.Timestamp).toDate(),
+      startsAt: ((data.startsAt as unknown) as firebase.firestore.Timestamp).toDate()
+    };
+    if (data.kind === "limited") {
+      licenses[
+        docSnapshot.id
+      ].expiredAt = ((data.expiredAt as unknown) as firebase.firestore.Timestamp).toDate();
+    }
+  });
+  dispatch(fetchLicensesSuccess(licenses));
 };

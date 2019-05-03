@@ -1,21 +1,23 @@
 import React from "react";
 import { Print } from "expo";
-import { Share, PixelRatio } from "react-native";
+import { Share } from "react-native";
 import { AnyAction } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { Helmet } from "react-helmet";
 import paperSize from "paper-size";
 import { State } from "../redux/state";
-import { app } from "../firebase";
 import { renderToString } from "../lib/html";
 import { Report } from "../components/pages/Report";
 import { getLoggedInUser } from "../redux/selectors/getLoggedInUser";
 import { getJournals } from "../redux/selectors/getJournals";
+import { addExamine } from "../redux/store/examines/actions";
 
 export const generateReport = ({
+  remaining,
   startsAt,
   endsAt
 }: {
+  remaining: number;
   startsAt: Date;
   endsAt: Date;
 }): ThunkAction<Promise<void>, State, {}, AnyAction> => async (
@@ -27,9 +29,14 @@ export const generateReport = ({
     return;
   }
 
-  // TODO: 期間によるフィルタ
   const { licenses } = getState().licenses;
   const journals = getJournals(getState());
+
+  const journalsInRange = journals.filter(
+    j =>
+      startsAt.getTime() <= j.createdAt.getTime() &&
+      j.createdAt.getTime() <= endsAt.getTime()
+  );
 
   const dateFormatter = new Intl.DateTimeFormat("en", {
     year: "numeric",
@@ -56,7 +63,12 @@ export const generateReport = ({
         </title>
       </Helmet>
       <div className="sheet padding-20mm">
-        <Report licenses={licenses} journals={journals} />
+        <Report
+          licenses={licenses}
+          journals={journalsInRange}
+          remaining={remaining}
+          startsAt={startsAt}
+        />
       </div>
     </>,
     Helmet
@@ -76,4 +88,6 @@ export const generateReport = ({
   if (result.action === Share.dismissedAction) {
     return;
   }
+
+  dispatch(addExamine({ examinedAt: endsAt }));
 };

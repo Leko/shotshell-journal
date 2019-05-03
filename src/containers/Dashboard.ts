@@ -3,18 +3,19 @@ import { connect } from "react-redux";
 import { lifecycle } from "recompose";
 import { State } from "../redux/state";
 import { Dashboard } from "../components/pages/Dashboard";
-import { getLicenses } from "../redux/selectors/getLicenses";
 import { getLatestJournals } from "../redux/selectors/getLatestJournals";
 import { getLimitedLicense } from "../redux/selectors/getLimitedLicense";
 import { getRemaining } from "../redux/selectors/getRemaining";
 import { getRemainingLicenseCount } from "../redux/selectors/getRemainingLicenseCount";
+import { getCarryOver } from "../redux/selectors/getCarryOver";
 import { fetchJournals } from "../usecases/fetchJournals";
 import { fetchLicenses } from "../usecases/fetchLicenses";
-import { generateReport } from "../usecases/generateReport";
+import { fetchExamines } from "../usecases/fetchExamines";
+import { fetchCarryOver } from "../usecases/fetchCarryOver";
 
 function mapStateToProps(state: State) {
   return {
-    hasLicense: getLicenses(state).length > 0,
+    hasCarryOver: getCarryOver(state) === null ? null : !!getCarryOver(state),
     limitedLicense: getLimitedLicense(state),
     latestJournals: getLatestJournals(state),
     remaining: getRemaining(state),
@@ -26,14 +27,8 @@ function mapDispatchToProps(dispatch: Dispatch<any>) {
     onLoad() {
       dispatch(fetchJournals());
       dispatch(fetchLicenses());
-    },
-    onRequestPrint({ startsAt, endsAt }: { startsAt: Date; endsAt: Date }) {
-      dispatch(
-        generateReport({
-          startsAt,
-          endsAt
-        })
-      );
+      dispatch(fetchExamines());
+      dispatch(fetchCarryOver());
     }
   };
 }

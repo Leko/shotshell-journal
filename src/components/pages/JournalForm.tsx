@@ -188,6 +188,9 @@ export function JournalForm(props: Props & NavigationScreenProps) {
               setFieldTouched("amount");
             }}
             onChangeText={(text: string) => {
+              if (isNaN(parseInt(text, 10))) {
+                return;
+              }
               setFieldValue("amount", parseInt(text, 10));
             }}
           />

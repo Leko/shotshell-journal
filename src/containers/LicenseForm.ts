@@ -31,15 +31,15 @@ function mapDispatchToProps(
   };
 }
 
-const journalForm: WithFormikConfig<
+const licenseForm: WithFormikConfig<
   NavigationScreenProps<{ kind: UnsavedLicense["kind"] }> & {
     onSubmit(values: UnsavedLicense): any;
   },
   UnsavedLicense
 > = {
   isInitialValid(props) {
-    const values = journalForm.mapPropsToValues!(props);
-    return journalForm.validationSchema.isValidSync(values);
+    const values = licenseForm.mapPropsToValues!(props);
+    return licenseForm.validationSchema.isValidSync(values);
   },
   validationSchema: Yup.object().shape({
     kind: Yup.string().required(),
@@ -91,4 +91,4 @@ const journalForm: WithFormikConfig<
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withFormik(journalForm)(LicenseForm));
+)(withFormik(licenseForm)(LicenseForm));
