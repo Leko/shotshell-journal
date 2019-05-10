@@ -36,7 +36,7 @@ export const generateReport = ({
     j =>
       startsAt.getTime() <= j.createdAt.getTime() &&
       j.createdAt.getTime() <= endsAt.getTime()
-  );
+  ).sort((a, b) => a.date.getTime() - b.date.getTime());
 
   const dateFormatter = new Intl.DateTimeFormat("en", {
     year: "numeric",
