@@ -50,10 +50,11 @@ export function Report(props: Props) {
   const dateFormatter = new Intl.DateTimeFormat("ja-JP-u-ca-japanese", {
     era: "narrow"
   });
-  const sum = journals.reduce(
-    (acc, { kind, amount }) => acc + (kind === "consume" ? -amount : amount),
-    0
-  );
+  const sum =
+    journals.reduce(
+      (acc, { kind, amount }) => acc + (kind === "consume" ? -amount : amount),
+      0
+    ) + remaining;
 
   return (
     <>
