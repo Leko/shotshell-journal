@@ -5,6 +5,8 @@ import "../../public/print.css";
 
 render(
   <Report
+    remaining={128}
+    startsAt={new Date(2018, 4, 1)}
     journals={[
       {
         licenseId: "xxx",
