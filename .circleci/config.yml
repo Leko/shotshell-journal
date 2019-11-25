@@ -50,6 +50,7 @@ jobs:
           keys:
             - v{{ .Environment.CIRCLECI_CACHE_VERSION }}-functions-dependencies-{{ .Branch }}-{{ checksum "functions/package-lock.json" }}
             - v{{ .Environment.CIRCLECI_CACHE_VERSION }}-functions-dependencies-master-{{ checksum "functions/package-lock.json" }}
-      - run: npx expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD
-      - run: npx expo publish --non-interactive
+      - run: npm i -g expo-cli
+      - run: expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD
+      - run: expo publish --non-interactive
       - run: cd functions && npx firebase deploy --token "$FIREBASE_TOKEN" --only hosting
