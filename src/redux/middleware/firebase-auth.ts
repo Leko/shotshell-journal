@@ -20,7 +20,7 @@ export const firebaseAuth = (
     const credential = firebase.auth.GoogleAuthProvider.credential(user.idToken)
     firebaseApp
       .auth()
-      .signInAndRetrieveDataWithCredential(credential)
+      .signInWithCredential(credential)
       .then(() => {
         store.dispatch(setUser(user))
       })

@@ -116,10 +116,15 @@ const MemberStack = createDrawerNavigator(
   }
 )
 
-const RootStack = createSwitchNavigator({
-  AuthLoading,
-  GuestStack,
-  MemberStack,
-})
+const RootStack = createSwitchNavigator(
+  {
+    AuthLoading,
+    GuestStack,
+    MemberStack,
+  },
+  {
+    initialRouteName: "AuthLoading",
+  }
+)
 
 export const Routes = createAppContainer(RootStack)
