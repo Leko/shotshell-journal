@@ -20,7 +20,7 @@ export const logout = (): ThunkAction<
   }
   const { accessToken } = getState().user.rawUser!
   try {
-    await Google.logOutAsync({ accessToken, clientId })
+    await Google.logOutAsync({ accessToken: accessToken!, clientId })
   } catch (e) {
     console.error(e)
     throw e

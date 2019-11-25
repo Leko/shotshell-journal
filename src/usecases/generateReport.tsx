@@ -91,5 +91,6 @@ export const generateReport = ({
     return
   }
 
+  // @ts-ignore
   dispatch(addExamine({ examinedAt: endsAt }))
 }

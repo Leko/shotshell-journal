@@ -12,25 +12,26 @@ export const addLicense = (
   dispatch,
   getState
 ) => {
-  const user = getLoggedInUser(getState())
-  if (!user) {
-    return
-  }
+    const user = getLoggedInUser(getState())
+    if (!user) {
+      return
+    }
 
-  const licenseWithUser = {
-    ...license,
-    userId: user.id,
-    createdAt: new Date(),
-  }
-  const ref = await app
-    .firestore()
-    .collection("licenses")
-    .add(licenseWithUser)
+    const licenseWithUser = {
+      ...license,
+      userId: user.id!,
+      createdAt: new Date(),
+    }
+    const ref = await app
+      .firestore()
+      .collection("licenses")
+      .add(licenseWithUser)
 
-  dispatch(
-    addLicenseLocal({
-      ...licenseWithUser,
-      id: ref.id,
-    })
-  )
-}
+    dispatch(
+      // @ts-ignore
+      addLicenseLocal({
+        ...licenseWithUser,
+        id: ref.id,
+      })
+    )
+  }

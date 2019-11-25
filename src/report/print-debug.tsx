@@ -33,6 +33,7 @@ render(
       xxx: {
         kind: "limited",
         id: "xxx",
+        userId: "XXX",
         purpose: "SHOOTING",
         gauge: 12,
         amount: 2000,

@@ -12,27 +12,27 @@ export const setCarryOver = (
   dispatch,
   getState
 ) => {
-  const user = getLoggedInUser(getState())
-  if (!user) {
-    return
+    const user = getLoggedInUser(getState())
+    if (!user) {
+      return
+    }
+
+    const carryOverWithUser = {
+      ...carryOver,
+      userId: user.id!,
+      createdAt: new Date(),
+    }
+
+    await app
+      .firestore()
+      .collection("carryOvers")
+      .doc(user.id)
+      .set(carryOverWithUser)
+
+    dispatch(
+      setCarryOverLocal({
+        ...carryOverWithUser,
+        id: user.id!,
+      })
+    )
   }
-
-  const carryOverWithUser = {
-    ...carryOver,
-    userId: user.id,
-    createdAt: new Date(),
-  }
-
-  await app
-    .firestore()
-    .collection("carryOvers")
-    .doc(user.id)
-    .set(carryOverWithUser)
-
-  dispatch(
-    setCarryOverLocal({
-      ...carryOverWithUser,
-      id: user.id,
-    })
-  )
-}

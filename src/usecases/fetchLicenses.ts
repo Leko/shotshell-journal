@@ -29,7 +29,7 @@ export const fetchLicenses = (): ThunkAction<
     .get()
   const licenses: Record<string, License> = {}
   snapshot.forEach(docSnapshot => {
-    const data: License = docSnapshot.data()
+    const data = docSnapshot.data()! as License
     licenses[docSnapshot.id] = {
       ...data,
       id: docSnapshot.id,

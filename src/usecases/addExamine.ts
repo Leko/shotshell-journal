@@ -12,26 +12,26 @@ export const addExamine = (
   dispatch,
   getState
 ) => {
-  const user = getLoggedInUser(getState())
-  if (!user) {
-    return
+    const user = getLoggedInUser(getState())
+    if (!user) {
+      return
+    }
+
+    const examineWithUser = {
+      ...examine,
+      userId: user.id!,
+      createdAt: new Date(),
+    }
+
+    const ref = await app
+      .firestore()
+      .collection("examines")
+      .add(examineWithUser)
+
+    dispatch(
+      addExamineLocal({
+        ...examineWithUser,
+        id: ref.id,
+      })
+    )
   }
-
-  const examineWithUser = {
-    ...examine,
-    userId: user.id,
-    createdAt: new Date(),
-  }
-
-  const ref = await app
-    .firestore()
-    .collection("examines")
-    .add(examineWithUser)
-
-  dispatch(
-    addExamineLocal({
-      ...examineWithUser,
-      id: ref.id,
-    })
-  )
-}

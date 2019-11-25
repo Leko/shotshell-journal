@@ -13,16 +13,17 @@ export const setJournal = (
   dispatch,
   getState
 ) => {
-  const user = getLoggedInUser(getState())
-  if (!user) {
-    return
+    const user = getLoggedInUser(getState())
+    if (!user) {
+      return
+    }
+
+    await app
+      .firestore()
+      .collection("journals")
+      .doc(id)
+      .set(journal)
+
+    // @ts-ignore
+    dispatch(addJournal({ id, ...journal }))
   }
-
-  await app
-    .firestore()
-    .collection("journals")
-    .doc(id)
-    .set(journal)
-
-  dispatch(addJournal({ id, ...journal }))
-}

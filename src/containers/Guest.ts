@@ -5,7 +5,7 @@ import { State } from "../redux/state"
 import { Guest } from "../components/pages/Guest"
 import { loginWithGoogle } from "../usecases/loginWithGoogle"
 
-function mapStateToProps(state: State) {
+function mapStateToProps(_state: State) {
   return {}
 }
 function mapDispatchToProps(

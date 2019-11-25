@@ -12,25 +12,26 @@ export const addJournal = (
   dispatch,
   getState
 ) => {
-  const user = getLoggedInUser(getState())
-  if (!user) {
-    return
-  }
+    const user = getLoggedInUser(getState())
+    if (!user) {
+      return
+    }
 
-  const journalWithUser = {
-    ...journal,
-    userId: user.id,
-    createdAt: new Date(),
-  }
-  const ref = await app
-    .firestore()
-    .collection("journals")
-    .add(journalWithUser)
+    const journalWithUser = {
+      ...journal,
+      userId: user.id!,
+      createdAt: new Date(),
+    }
+    const ref = await app
+      .firestore()
+      .collection("journals")
+      .add(journalWithUser)
 
-  dispatch(
-    addJournalLocal({
-      ...journalWithUser,
-      id: ref.id,
-    })
-  )
-}
+    dispatch(
+      // @ts-ignore
+      addJournalLocal({
+        ...journalWithUser,
+        id: ref.id,
+      })
+    )
+  }
