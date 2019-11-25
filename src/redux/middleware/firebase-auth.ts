@@ -1,5 +1,5 @@
 import { Middleware, Dispatch, AnyAction } from "redux"
-import { SecureStore } from "expo"
+import * as SecureStore from "expo-secure-store"
 import { State } from "../state"
 import { SET_USER } from "../store/user/types"
 import { setUser } from "../store/user/actions"
