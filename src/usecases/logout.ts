@@ -1,6 +1,6 @@
 import { AnyAction } from "redux"
 import { ThunkAction } from "redux-thunk"
-import { Google } from "expo"
+import * as Google from "expo-google-app-auth"
 import { State } from "../redux/state"
 import { setUser } from "../redux/store/user/actions"
 import { getLoggedInUser } from "../redux/selectors/getLoggedInUser"

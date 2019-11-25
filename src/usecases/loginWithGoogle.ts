@@ -1,6 +1,6 @@
 import { AnyAction } from "redux"
 import { ThunkAction } from "redux-thunk"
-import { Google } from "expo"
+import * as Google from "expo-google-app-auth"
 import * as firebase from "firebase"
 import { State } from "../redux/state"
 import { setUser } from "../redux/store/user/actions"
@@ -17,8 +17,7 @@ export const loginWithGoogle = (): ThunkAction<
   AnyAction
 > => async dispatch => {
   const config = {
-    androidClientId: clientId,
-    iosClientId: clientId,
+    clientId: clientId,
     scopes: ["profile"],
   }
   try {
@@ -31,7 +30,7 @@ export const loginWithGoogle = (): ThunkAction<
     const credential = firebase.auth.GoogleAuthProvider.credential(
       result.idToken
     )
-    await app.auth().signInAndRetrieveDataWithCredential(credential)
+    await app.auth().signInWithCredential(credential)
 
     dispatch(setUser(result))
   } catch (e) {
