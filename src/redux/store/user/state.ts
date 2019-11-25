@@ -2,8 +2,8 @@ import { User as UserModel } from "../../../models/User"
 
 export type User = {
   type: "success"
-  accessToken: string
-  idToken?: string
+  accessToken: string | null
+  idToken: string | null
   user: UserModel
 }
 

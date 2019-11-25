@@ -29,7 +29,7 @@ export const fetchExamines = (): ThunkAction<
     .get()
   const examines: Record<string, Examine> = {}
   snapshot.forEach(docSnapshot => {
-    const data: Examine = docSnapshot.data()
+    const data = docSnapshot.data()! as Examine
     examines[docSnapshot.id] = {
       ...data,
       id: docSnapshot.id,

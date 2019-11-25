@@ -1,4 +1,4 @@
-import { UnsavedExamine, Examine } from "../../../models/Examine"
+import { Examine } from "../../../models/Examine"
 import {
   ADD_EXAMINE,
   FETCH_EXAMINES_STARTED,
@@ -6,7 +6,7 @@ import {
   FETCH_EXAMINES_FAILED,
 } from "./types"
 
-export const addExamine = (examine: UnsavedExamine) => ({
+export const addExamine = (examine: Examine) => ({
   type: ADD_EXAMINE,
   examine,
 })

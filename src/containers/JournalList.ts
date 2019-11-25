@@ -9,7 +9,7 @@ function mapStateToProps(state: State) {
     journals: getJournals(state),
   }
 }
-function mapDispatchToProps(dispatch: Dispatch<AnyAction>) {
+function mapDispatchToProps(_dispatch: Dispatch<AnyAction>) {
   return {}
 }
 

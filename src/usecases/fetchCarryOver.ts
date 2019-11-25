@@ -28,10 +28,10 @@ export const fetchCarryOver = (): ThunkAction<
     .doc(user.id)
     .get()
 
-  const data: CarryOver = snapshot.data()
+  const data = snapshot.data()! as CarryOver
   const carryOver: CarryOver = {
     ...data,
-    id: user.id,
+    id: user.id!,
     createdAt: ((data.createdAt as unknown) as firebase.firestore.Timestamp).toDate(),
   }
   dispatch(setCarryOver(carryOver))
