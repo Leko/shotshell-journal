@@ -1,10 +1,10 @@
-import { AnyAction } from "redux";
-import { ThunkAction } from "redux-thunk";
-import { State } from "../redux/state";
-import { UnsavedJournal } from "../models/Journal";
-import { addJournal as addJournalLocal } from "../redux/store/journals/actions";
-import { app } from "../firebase";
-import { getLoggedInUser } from "../redux/selectors/getLoggedInUser";
+import { AnyAction } from "redux"
+import { ThunkAction } from "redux-thunk"
+import { State } from "../redux/state"
+import { UnsavedJournal } from "../models/Journal"
+import { addJournal as addJournalLocal } from "../redux/store/journals/actions"
+import { app } from "../firebase"
+import { getLoggedInUser } from "../redux/selectors/getLoggedInUser"
 
 export const addJournal = (
   journal: UnsavedJournal
@@ -12,25 +12,25 @@ export const addJournal = (
   dispatch,
   getState
 ) => {
-  const user = getLoggedInUser(getState());
+  const user = getLoggedInUser(getState())
   if (!user) {
-    return;
+    return
   }
 
   const journalWithUser = {
     ...journal,
     userId: user.id,
-    createdAt: new Date()
-  };
+    createdAt: new Date(),
+  }
   const ref = await app
     .firestore()
     .collection("journals")
-    .add(journalWithUser);
+    .add(journalWithUser)
 
   dispatch(
     addJournalLocal({
       ...journalWithUser,
-      id: ref.id
+      id: ref.id,
     })
-  );
-};
+  )
+}

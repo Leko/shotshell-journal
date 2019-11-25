@@ -1,19 +1,19 @@
-import { Dispatch } from "redux";
-import { connect } from "react-redux";
-import { NavigationScreenProps } from "react-navigation";
-import { withFormik, WithFormikConfig } from "formik";
-import * as Yup from "yup";
-import { State } from "../redux/state";
-import { CarryOverForm } from "../components/pages/CarryOverForm";
-import { UnsavedCarryOver } from "../models/CarryOver";
-import { UnsavedExamine } from "../models/Examine";
-import { setCarryOver } from "../usecases/setCarryOver";
-import { addExamine } from "../usecases/addExamine";
+import { Dispatch } from "redux"
+import { connect } from "react-redux"
+import { NavigationScreenProps } from "react-navigation"
+import { withFormik, WithFormikConfig } from "formik"
+import * as Yup from "yup"
+import { State } from "../redux/state"
+import { CarryOverForm } from "../components/pages/CarryOverForm"
+import { UnsavedCarryOver } from "../models/CarryOver"
+import { UnsavedExamine } from "../models/Examine"
+import { setCarryOver } from "../usecases/setCarryOver"
+import { addExamine } from "../usecases/addExamine"
 
-type CarryOverAndExamine = UnsavedCarryOver & UnsavedExamine;
+type CarryOverAndExamine = UnsavedCarryOver & UnsavedExamine
 
 function mapStateToProps(state: State) {
-  return {};
+  return {}
 }
 function mapDispatchToProps(
   dispatch: Dispatch<any>,
@@ -21,50 +21,50 @@ function mapDispatchToProps(
 ) {
   return {
     async onSubmit(values: CarryOverAndExamine) {
-      const { examinedAt, remaining } = values;
+      const { examinedAt, remaining } = values
       await Promise.all([
         dispatch(setCarryOver({ remaining })),
-        dispatch(addExamine({ examinedAt }))
-      ]);
-      ownProps.navigation.goBack();
-    }
-  };
+        dispatch(addExamine({ examinedAt })),
+      ])
+      ownProps.navigation.goBack()
+    },
+  }
 }
 
 const carryOverForm: WithFormikConfig<
   {
-    onSubmit(values: CarryOverAndExamine): any;
+    onSubmit(values: CarryOverAndExamine): any
   },
   CarryOverAndExamine
 > = {
   isInitialValid(props) {
-    const values = carryOverForm.mapPropsToValues!(props);
-    return carryOverForm.validationSchema.isValidSync(values);
+    const values = carryOverForm.mapPropsToValues!(props)
+    return carryOverForm.validationSchema.isValidSync(values)
   },
 
   validationSchema: Yup.object().shape({
     examinedAt: Yup.date().required(),
-    remaining: Yup.number().integer()
+    remaining: Yup.number().integer(),
   }),
 
   mapPropsToValues() {
     return {
       remaining: 0,
-      examinedAt: new Date()
-    };
+      examinedAt: new Date(),
+    }
   },
 
   handleSubmit(values, bag) {
-    bag.setSubmitting(true);
+    bag.setSubmitting(true)
     try {
-      bag.props.onSubmit(values);
+      bag.props.onSubmit(values)
     } finally {
-      bag.setSubmitting(false);
+      bag.setSubmitting(false)
     }
-  }
-};
+  },
+}
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withFormik(carryOverForm)(CarryOverForm));
+)(withFormik(carryOverForm)(CarryOverForm))

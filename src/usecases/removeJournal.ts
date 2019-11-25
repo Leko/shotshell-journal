@@ -1,10 +1,10 @@
-import { AnyAction } from "redux";
-import { ThunkAction } from "redux-thunk";
-import { State } from "../redux/state";
-import { Journal } from "../models/Journal";
-import { removeJournal as removeJournalLocal } from "../redux/store/journals/actions";
-import { app } from "../firebase";
-import { getLoggedInUser } from "../redux/selectors/getLoggedInUser";
+import { AnyAction } from "redux"
+import { ThunkAction } from "redux-thunk"
+import { State } from "../redux/state"
+import { Journal } from "../models/Journal"
+import { removeJournal as removeJournalLocal } from "../redux/store/journals/actions"
+import { app } from "../firebase"
+import { getLoggedInUser } from "../redux/selectors/getLoggedInUser"
 
 export const removeJournal = (
   journal: Journal
@@ -12,16 +12,16 @@ export const removeJournal = (
   dispatch,
   getState
 ) => {
-  const user = getLoggedInUser(getState());
+  const user = getLoggedInUser(getState())
   if (!user) {
-    return;
+    return
   }
 
   await app
     .firestore()
     .collection("journals")
     .doc(journal.id)
-    .delete();
+    .delete()
 
-  dispatch(removeJournalLocal(journal.id));
-};
+  dispatch(removeJournalLocal(journal.id))
+}

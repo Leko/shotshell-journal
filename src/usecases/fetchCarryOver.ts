@@ -1,13 +1,13 @@
-import { AnyAction } from "redux";
-import { ThunkAction } from "redux-thunk";
-import { State } from "../redux/state";
+import { AnyAction } from "redux"
+import { ThunkAction } from "redux-thunk"
+import { State } from "../redux/state"
 import {
   fetchCarryOversStart,
-  setCarryOver
-} from "../redux/store/carryOver/actions";
-import { app } from "../firebase";
-import { getLoggedInUser } from "../redux/selectors/getLoggedInUser";
-import { CarryOver } from "../models/CarryOver";
+  setCarryOver,
+} from "../redux/store/carryOver/actions"
+import { app } from "../firebase"
+import { getLoggedInUser } from "../redux/selectors/getLoggedInUser"
+import { CarryOver } from "../models/CarryOver"
 
 export const fetchCarryOver = (): ThunkAction<
   Promise<void>,
@@ -15,24 +15,24 @@ export const fetchCarryOver = (): ThunkAction<
   {},
   AnyAction
 > => async (dispatch, getState) => {
-  dispatch(fetchCarryOversStart());
+  dispatch(fetchCarryOversStart())
 
-  const user = getLoggedInUser(getState());
+  const user = getLoggedInUser(getState())
   if (!user) {
-    return;
+    return
   }
 
   const snapshot = await app
     .firestore()
     .collection("carryOvers")
     .doc(user.id)
-    .get();
+    .get()
 
-  const data: CarryOver = snapshot.data();
+  const data: CarryOver = snapshot.data()
   const carryOver: CarryOver = {
     ...data,
     id: user.id,
-    createdAt: ((data.createdAt as unknown) as firebase.firestore.Timestamp).toDate()
-  };
-  dispatch(setCarryOver(carryOver));
-};
+    createdAt: ((data.createdAt as unknown) as firebase.firestore.Timestamp).toDate(),
+  }
+  dispatch(setCarryOver(carryOver))
+}

@@ -1,39 +1,37 @@
-import addYears from "date-fns/add_years";
-import addMonths from "date-fns/add_months";
-import subDays from "date-fns/sub_days";
+import { addYears, addMonths, subDays } from "date-fns"
 
-type Omit<T, K> = Pick<T, Exclude<keyof T, K>>;
+type Omit<T, K> = Pick<T, Exclude<keyof T, K>>
 
-export type Purpose = "SHOOTING" | "HUNTING";
+export type Purpose = "SHOOTING" | "HUNTING"
 
 export type UnlimitedLicense = {
-  kind: "unlimited";
-  gauge: number;
-  purpose: Purpose;
-};
+  kind: "unlimited"
+  gauge: number
+  purpose: Purpose
+}
 export type LimitedLicense = {
-  kind: "limited";
-  gauge: number;
-  purpose: Purpose;
-  amount: number;
-};
+  kind: "limited"
+  gauge: number
+  purpose: Purpose
+  amount: number
+}
 
 export type License = {
-  id: string;
-  userId: string;
-  createdAt: Date;
-  startsAt: Date;
-  expiredAt: Date;
-} & (UnlimitedLicense | LimitedLicense);
+  id: string
+  userId: string
+  createdAt: Date
+  startsAt: Date
+  expiredAt: Date
+} & (UnlimitedLicense | LimitedLicense)
 
-export type UnsavedLicense = Omit<License, "id" | "userId" | "createdAt">;
+export type UnsavedLicense = Omit<License, "id" | "userId" | "createdAt">
 
 export function getUnlimitedExpiredAt(date: Date) {
-  return subDays(addMonths(date, 4), 1);
+  return subDays(addMonths(date, 4), 1)
 }
 export function getLimitedExpiredAt(date: Date) {
-  return subDays(addYears(date, 1), 1);
+  return subDays(addYears(date, 1), 1)
 }
 export function getPurposeName(purpose: Purpose) {
-  return purpose === "HUNTING" ? "狩猟" : "標的射撃";
+  return purpose === "HUNTING" ? "狩猟" : "標的射撃"
 }

@@ -1,6 +1,6 @@
-import { License } from "../../../models/License";
+import { License } from "../../../models/License"
 
 export type State = {
-  error: Error | null;
-  licenses: Record<string, License>;
-};
+  error: Error | null
+  licenses: Record<string, License>
+}

@@ -1,13 +1,13 @@
-import * as React from "react";
-import { Journal } from "../../models/Journal";
-import { License, getPurposeName } from "../../models/License";
+import * as React from "react"
+import { Journal } from "../../models/Journal"
+import { License, getPurposeName } from "../../models/License"
 
 type Props = {
-  remaining: number;
-  startsAt: Date;
-  journals: Journal[];
-  licenses: Record<string, License>;
-};
+  remaining: number
+  startsAt: Date
+  journals: Journal[]
+  licenses: Record<string, License>
+}
 
 const schema = {
   heads: [
@@ -19,11 +19,11 @@ const schema = {
       { title: "空砲", className: "", rowSpan: 2, colSpan: 2 },
       { title: "実包・空砲\n合計", className: "", rowSpan: 3 },
       { title: "銃用雷管", className: "", rowSpan: 2, colSpan: 3 },
-      { title: "火薬（グラム）", className: "", rowSpan: 2, colSpan: 3 }
+      { title: "火薬（グラム）", className: "", rowSpan: 2, colSpan: 3 },
     ],
     [
       { title: "ライフル銃以外の猟銃", className: "", colSpan: 3 },
-      { title: "ライフル", className: "", colSpan: 3 }
+      { title: "ライフル", className: "", colSpan: 3 },
     ],
     [
       { title: "番径", className: "" },
@@ -39,22 +39,22 @@ const schema = {
       { title: "残", className: "" },
       { title: "受", className: "" },
       { title: "払", className: "" },
-      { title: "残", className: "" }
-    ]
-  ]
-};
+      { title: "残", className: "" },
+    ],
+  ],
+}
 
 export function Report(props: Props) {
-  const { journals, licenses, startsAt, remaining } = props;
+  const { journals, licenses, startsAt, remaining } = props
 
   const dateFormatter = new Intl.DateTimeFormat("ja-JP-u-ca-japanese", {
-    era: "narrow"
-  });
+    era: "narrow",
+  })
   const sum =
     journals.reduce(
       (acc, { kind, amount }) => acc + (kind === "consume" ? -amount : amount),
       0
-    ) + remaining;
+    ) + remaining
 
   return (
     <>
@@ -99,9 +99,9 @@ export function Report(props: Props) {
             </tr>
           ) : null}
           {journals.map(journal => {
-            const license = licenses[journal.licenseId];
+            const license = licenses[journal.licenseId]
             if (!license) {
-              throw new Error("License not found");
+              throw new Error("License not found")
             }
             return (
               <tr key={journal.id}>
@@ -132,7 +132,7 @@ export function Report(props: Props) {
                 <td>-</td>
                 <td>-</td>
               </tr>
-            );
+            )
           })}
         </tbody>
         <tfoot>
@@ -146,5 +146,5 @@ export function Report(props: Props) {
         </tfoot>
       </table>
     </>
-  );
+  )
 }

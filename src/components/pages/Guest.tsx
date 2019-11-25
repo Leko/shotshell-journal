@@ -1,14 +1,14 @@
-import React from "react";
-import { StyleSheet } from "react-native";
-import { View, Heading, Button, Text } from "@shoutem/ui";
-import { PageContainer } from "../molecules/PageContainer";
+import React from "react"
+import { StyleSheet } from "react-native"
+import { View, Heading, Button, Text } from "@shoutem/ui"
+import { PageContainer } from "../molecules/PageContainer"
 
 type Props = {
-  onRequestLogin: () => any;
-};
+  onRequestLogin: () => any
+}
 
 export function Guest(props: Props) {
-  const { onRequestLogin } = props;
+  const { onRequestLogin } = props
 
   return (
     <PageContainer>
@@ -20,12 +20,12 @@ export function Guest(props: Props) {
         </Button>
       </View>
     </PageContainer>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
     paddingVertical: 20,
-    paddingHorizontal: 10
-  }
-});
+    paddingHorizontal: 10,
+  },
+})

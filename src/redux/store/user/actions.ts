@@ -1,9 +1,9 @@
-import { User } from "./state";
-import { SET_USER } from "./types";
+import { User } from "./state"
+import { SET_USER } from "./types"
 
 export const setUser = (user: User | null) => ({
   type: SET_USER,
-  user
-});
+  user,
+})
 
-export type Action = ReturnType<typeof setUser>;
+export type Action = ReturnType<typeof setUser>

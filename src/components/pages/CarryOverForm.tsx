@@ -1,17 +1,17 @@
-import React from "react";
-import { StyleSheet } from "react-native";
-import { FormikProps } from "formik";
-import { View, Heading, Title, Caption, TextInput } from "@shoutem/ui";
-import { UnsavedCarryOver } from "../../models/CarryOver";
-import { UnsavedExamine } from "../../models/Examine";
-import { PageContainer } from "../molecules/PageContainer";
-import { Button } from "../molecules/Button";
-import { ValidationError } from "../atoms/ValidationError";
-import { DateInput } from "../organisms/DateInput";
+import React from "react"
+import { StyleSheet } from "react-native"
+import { FormikProps } from "formik"
+import { View, Heading, Title, Caption, TextInput } from "@shoutem/ui"
+import { UnsavedCarryOver } from "../../models/CarryOver"
+import { UnsavedExamine } from "../../models/Examine"
+import { PageContainer } from "../molecules/PageContainer"
+import { Button } from "../molecules/Button"
+import { ValidationError } from "../atoms/ValidationError"
+import { DateInput } from "../organisms/DateInput"
 
-type CarryOverAndExamine = UnsavedCarryOver & UnsavedExamine;
+type CarryOverAndExamine = UnsavedCarryOver & UnsavedExamine
 
-type Props = {};
+type Props = {}
 
 export function CarryOverForm(props: Props & FormikProps<CarryOverAndExamine>) {
   const {
@@ -22,9 +22,9 @@ export function CarryOverForm(props: Props & FormikProps<CarryOverAndExamine>) {
     isSubmitting,
     handleSubmit,
     setFieldValue,
-    setFieldTouched
-  } = props;
-  const canSubmit = isValid && !isSubmitting;
+    setFieldTouched,
+  } = props
+  const canSubmit = isValid && !isSubmitting
 
   return (
     <PageContainer>
@@ -37,10 +37,10 @@ export function CarryOverForm(props: Props & FormikProps<CarryOverAndExamine>) {
           <DateInput
             value={values.examinedAt}
             onFocus={() => {
-              setFieldTouched("examinedAt");
+              setFieldTouched("examinedAt")
             }}
             onChange={date => {
-              setFieldValue("examinedAt", date);
+              setFieldValue("examinedAt", date)
             }}
           />
           <ValidationError
@@ -56,13 +56,13 @@ export function CarryOverForm(props: Props & FormikProps<CarryOverAndExamine>) {
             keyboardType="decimal-pad"
             defaultValue={String(values.remaining)}
             onBlur={() => {
-              setFieldTouched("remaining");
+              setFieldTouched("remaining")
             }}
             onChangeText={(text: string) => {
               if (isNaN(parseInt(text, 10))) {
-                return;
+                return
               }
-              setFieldValue("remaining", parseInt(text, 10));
+              setFieldValue("remaining", parseInt(text, 10))
             }}
           />
           <ValidationError
@@ -83,20 +83,20 @@ export function CarryOverForm(props: Props & FormikProps<CarryOverAndExamine>) {
         </View>
       </View>
     </PageContainer>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
     paddingVertical: 20,
-    paddingHorizontal: 10
+    paddingHorizontal: 10,
   },
   pickerContainer: {},
   inputPlaceholder: {
-    color: "black"
+    color: "black",
   },
   inputLike: {
     padding: 14,
-    justifyContent: "flex-start"
-  }
-});
+    justifyContent: "flex-start",
+  },
+})

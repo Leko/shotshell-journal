@@ -1,21 +1,21 @@
-import { Dispatch } from "redux";
-import { connect } from "react-redux";
-import { NavigationScreenProps } from "react-navigation";
-import { withFormik, WithFormikConfig } from "formik";
-import * as Yup from "yup";
-import { State } from "../redux/state";
-import { UnsavedJournal } from "../models/Journal";
-import { JournalForm } from "../components/pages/JournalForm";
-import { setJournal } from "../usecases/setJournal";
-import { getLicenses } from "../redux/selectors/getLicenses";
-import { License } from "../models/License";
-import { getJournals } from "../redux/selectors/getJournals";
+import { Dispatch } from "redux"
+import { connect } from "react-redux"
+import { NavigationScreenProps } from "react-navigation"
+import { withFormik, WithFormikConfig } from "formik"
+import * as Yup from "yup"
+import { State } from "../redux/state"
+import { UnsavedJournal } from "../models/Journal"
+import { JournalForm } from "../components/pages/JournalForm"
+import { setJournal } from "../usecases/setJournal"
+import { getLicenses } from "../redux/selectors/getLicenses"
+import { License } from "../models/License"
+import { getJournals } from "../redux/selectors/getJournals"
 
 function mapStateToProps(state: State) {
   return {
     licenses: getLicenses(state),
-    journals: getJournals(state)
-  };
+    journals: getJournals(state),
+  }
 }
 
 function mapDispatchToProps(
@@ -24,17 +24,17 @@ function mapDispatchToProps(
 ) {
   return {
     async onSubmit(values: UnsavedJournal) {
-      const id = ownProps.navigation.getParam("id", null);
-      await dispatch(setJournal(id, values));
-      ownProps.navigation.goBack();
-    }
-  };
+      const id = ownProps.navigation.getParam("id", null)
+      await dispatch(setJournal(id, values))
+      ownProps.navigation.goBack()
+    },
+  }
 }
 
 const journalForm: WithFormikConfig<
   NavigationScreenProps<{ initialValues: UnsavedJournal }> & {
-    licenses: License[];
-    onSubmit(values: UnsavedJournal): any;
+    licenses: License[]
+    onSubmit(values: UnsavedJournal): any
   },
   UnsavedJournal
 > = {
@@ -47,30 +47,30 @@ const journalForm: WithFormikConfig<
       .required(),
     // FIXME: should be required
     transferrer: Yup.string(),
-    place: Yup.string()
+    place: Yup.string(),
   }),
 
   mapPropsToValues(props) {
-    const { navigation } = props;
+    const { navigation } = props
 
     const initialValues = navigation.getParam(
       "initialValues",
       {} as UnsavedJournal
-    );
-    return initialValues;
+    )
+    return initialValues
   },
 
   handleSubmit(values, bag) {
-    bag.setSubmitting(true);
+    bag.setSubmitting(true)
     try {
-      bag.props.onSubmit(values);
+      bag.props.onSubmit(values)
     } finally {
-      bag.setSubmitting(false);
+      bag.setSubmitting(false)
     }
-  }
-};
+  },
+}
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withFormik(journalForm)(JournalForm));
+)(withFormik(journalForm)(JournalForm))

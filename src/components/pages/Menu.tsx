@@ -1,25 +1,17 @@
-import React from "react";
-import { NavigationScreenProps } from "react-navigation";
-import {
-  View,
-  Divider,
-  Image,
-  Button,
-  Icon,
-  Text,
-  Subtitle
-} from "@shoutem/ui";
-import { PageContainer } from "../molecules/PageContainer";
-import { User } from "../../models/User";
+import React from "react"
+import { NavigationScreenProps } from "react-navigation"
+import { View, Divider, Image, Button, Icon, Text, Subtitle } from "@shoutem/ui"
+import { PageContainer } from "../molecules/PageContainer"
+import { User } from "../../models/User"
 
 type Props = {
-  user: User | null;
-  hasCarryOver: boolean;
-  onRequestLogout: () => any;
-};
+  user: User | null
+  hasCarryOver: boolean
+  onRequestLogout: () => any
+}
 
 export function Menu(props: Props & NavigationScreenProps) {
-  const { user, hasCarryOver, navigation, onRequestLogout } = props;
+  const { user, hasCarryOver, navigation, onRequestLogout } = props
   return (
     <PageContainer>
       <View style={{ flex: 1 }}>
@@ -93,5 +85,5 @@ export function Menu(props: Props & NavigationScreenProps) {
         </View>
       </View>
     </PageContainer>
-  );
+  )
 }

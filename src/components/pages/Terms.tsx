@@ -1,7 +1,7 @@
-import React from "react";
-import { WebView } from "react-native";
+import React from "react"
+import { WebView } from "react-native"
 
-type Props = {};
+type Props = {}
 
 export function Terms(props: Props) {
   return (
@@ -9,5 +9,5 @@ export function Terms(props: Props) {
       source={{ uri: "https://shellshot-journal.firebaseapp.com/terms.html" }}
       style={{ flex: 1 }}
     />
-  );
+  )
 }

@@ -1,5 +1,5 @@
-import { State } from "../state";
+import { State } from "../state"
 
 export function isAuthenticating(state: State) {
-  return !state.user.resolved;
+  return !state.user.resolved
 }

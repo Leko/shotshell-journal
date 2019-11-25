@@ -1,7 +1,7 @@
-import * as React from "react";
-import { render } from "react-dom";
-import { Report } from "../components/pages/Report";
-import "../../public/print.css";
+import * as React from "react"
+import { render } from "react-dom"
+import { Report } from "../components/pages/Report"
+import "../../public/print.css"
 
 render(
   <Report
@@ -16,7 +16,7 @@ render(
         date: new Date(2018, 9, 14),
         userId: "XXX",
         createdAt: new Date(),
-        amount: 150
+        amount: 150,
       },
       {
         licenseId: "xxx",
@@ -26,8 +26,8 @@ render(
         date: new Date(2018, 9, 14),
         userId: "XXX",
         createdAt: new Date(),
-        amount: 150
-      }
+        amount: 150,
+      },
     ]}
     licenses={{
       xxx: {
@@ -38,9 +38,9 @@ render(
         amount: 2000,
         createdAt: new Date(),
         startsAt: new Date(2018, 4, 15),
-        expiredAt: new Date(2019, 4, 14)
-      }
+        expiredAt: new Date(2019, 4, 14),
+      },
     }}
   />,
   document.getElementById("root")
-);
+)

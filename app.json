@@ -3,7 +3,7 @@
     "name": "実包等管理帳簿",
     "slug": "shellshot-journal",
     "privacy": "public",
-    "sdkVersion": "32.0.0",
+    "sdkVersion": "35.0.0",
     "platforms": [
       "ios",
       "android"
@@ -24,10 +24,10 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "jp.leko.shellshot-journal",
+      "bundleIdentifier": "jp.leko.shellshot-journal"
     },
     "android": {
-      "package": "jp.leko.shellshotjournal",
+      "package": "jp.leko.shellshotjournal"
     }
   }
 }
