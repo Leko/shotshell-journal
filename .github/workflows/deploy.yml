@@ -23,5 +23,5 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
       - run: npm ci
-      - run: echo '${{ secrets.FIREBASE_CREDENTIAL }} > src/firebase/credential.json'
+      - run: echo '${{ secrets.FIREBASE_CREDENTIAL }}' > src/firebase/credential.json
       - run: npm run deploy:expo
