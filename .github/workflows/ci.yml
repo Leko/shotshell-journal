@@ -1,4 +1,4 @@
-name: CI/CD
+name: CI
 on: [pull_request]
 
 jobs:
@@ -38,28 +38,4 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
       - run: npm ci
-      - run: expo doctor
-  deploy:
-    # FIXME
-    needs: [expo]
-    # needs: [tsc, expo]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 12.x
-      - uses: expo/expo-github-action@v4
-        with:
-          expo-version: 3.x
-          expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
-          expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
-      - uses: actions/cache@v1
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-      - run: npm ci
-      - run: echo '${{ secrets.FIREBASE_CREDENTIAL }} > src/firebase/credential.json'
       - run: expo doctor
