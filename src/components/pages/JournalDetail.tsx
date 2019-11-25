@@ -1,14 +1,14 @@
-import React from "react";
-import { View, Heading } from "@shoutem/ui";
+import React from "react"
+import { View, Heading } from "@shoutem/ui"
 
-type Props = {};
+type Props = {}
 
 export function JournalDetail(props: Props) {
-  const {} = props;
+  const {} = props
 
   return (
     <View>
       <Heading>JournalDetail</Heading>
     </View>
-  );
+  )
 }

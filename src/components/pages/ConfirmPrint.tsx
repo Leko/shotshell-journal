@@ -1,19 +1,19 @@
-import React from "react";
-import { StyleSheet } from "react-native";
-import { View, Heading, Title, TextInput } from "@shoutem/ui";
-import { FormikProps } from "formik";
-import { PageContainer } from "../molecules/PageContainer";
-import { Button } from "../molecules/Button";
-import { DateInput } from "../organisms/DateInput";
-import { ValidationError } from "../atoms/ValidationError";
+import React from "react"
+import { StyleSheet } from "react-native"
+import { View, Heading, Title, TextInput } from "@shoutem/ui"
+import { FormikProps } from "formik"
+import { PageContainer } from "../molecules/PageContainer"
+import { Button } from "../molecules/Button"
+import { DateInput } from "../organisms/DateInput"
+import { ValidationError } from "../atoms/ValidationError"
 
 type Payload = {
-  remaining: number;
-  startsAt: Date;
-  endsAt: Date;
-};
+  remaining: number
+  startsAt: Date
+  endsAt: Date
+}
 
-type Props = {};
+type Props = {}
 
 export function ConfirmPrint(props: Props & FormikProps<Payload>) {
   const {
@@ -24,9 +24,9 @@ export function ConfirmPrint(props: Props & FormikProps<Payload>) {
     isSubmitting,
     handleSubmit,
     setFieldValue,
-    setFieldTouched
-  } = props;
-  const canSubmit = isValid && !isSubmitting;
+    setFieldTouched,
+  } = props
+  const canSubmit = isValid && !isSubmitting
 
   return (
     <PageContainer>
@@ -38,10 +38,10 @@ export function ConfirmPrint(props: Props & FormikProps<Payload>) {
           <DateInput
             value={values.startsAt}
             onFocus={() => {
-              setFieldTouched("startsAt");
+              setFieldTouched("startsAt")
             }}
             onChange={date => {
-              setFieldValue("startsAt", date);
+              setFieldValue("startsAt", date)
             }}
           />
           <ValidationError field="startsAt" errors={errors} touched={touched} />
@@ -52,10 +52,10 @@ export function ConfirmPrint(props: Props & FormikProps<Payload>) {
           <DateInput
             value={values.endsAt}
             onFocus={() => {
-              setFieldTouched("endsAt");
+              setFieldTouched("endsAt")
             }}
             onChange={date => {
-              setFieldValue("endsAt", date);
+              setFieldValue("endsAt", date)
             }}
           />
           <ValidationError field="endsAt" errors={errors} touched={touched} />
@@ -67,13 +67,13 @@ export function ConfirmPrint(props: Props & FormikProps<Payload>) {
             keyboardType="decimal-pad"
             defaultValue={String(values.remaining)}
             onBlur={() => {
-              setFieldTouched("remaining");
+              setFieldTouched("remaining")
             }}
             onChangeText={(text: string) => {
               if (isNaN(parseInt(text, 10))) {
-                return;
+                return
               }
-              setFieldValue("remaining", parseInt(text, 10));
+              setFieldValue("remaining", parseInt(text, 10))
             }}
           />
           <ValidationError
@@ -94,20 +94,20 @@ export function ConfirmPrint(props: Props & FormikProps<Payload>) {
         </View>
       </View>
     </PageContainer>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
     paddingVertical: 20,
-    paddingHorizontal: 10
+    paddingHorizontal: 10,
   },
   pickerContainer: {},
   inputPlaceholder: {
-    color: "black"
+    color: "black",
   },
   inputLike: {
     padding: 14,
-    justifyContent: "flex-start"
-  }
-});
+    justifyContent: "flex-start",
+  },
+})

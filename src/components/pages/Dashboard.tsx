@@ -1,6 +1,6 @@
-import React from "react";
-import { StyleSheet } from "react-native";
-import { NavigationScreenProps } from "react-navigation";
+import React from "react"
+import { StyleSheet } from "react-native"
+import { NavigationScreenProps } from "react-navigation"
 import {
   GridRow,
   Card,
@@ -9,23 +9,23 @@ import {
   Heading,
   Button,
   Text,
-  Icon
-} from "@shoutem/ui";
-import { PageContainer } from "../molecules/PageContainer";
-import { JournalList } from "../molecules/JournalList";
-import { Journal } from "../../models/Journal";
-import { License } from "../../models/License";
-import { differenceInCalendarDays } from "date-fns";
+  Icon,
+} from "@shoutem/ui"
+import { PageContainer } from "../molecules/PageContainer"
+import { JournalList } from "../molecules/JournalList"
+import { Journal } from "../../models/Journal"
+import { License } from "../../models/License"
+import { differenceInCalendarDays } from "date-fns"
 
 type Props = {
-  hasCarryOver: boolean;
-  limitedLicense: License | null;
-  latestJournals: Journal[];
-  remaining: number | null;
-  remainingLicenseCount: number | null;
-  onRequestEdit: (item: Journal) => any;
-  onRequestRemove: (item: Journal) => any;
-};
+  hasCarryOver: boolean
+  limitedLicense: License | null
+  latestJournals: Journal[]
+  remaining: number | null
+  remainingLicenseCount: number | null
+  onRequestEdit: (item: Journal) => any
+  onRequestRemove: (item: Journal) => any
+}
 
 export function Dashboard(props: Props & NavigationScreenProps) {
   const {
@@ -36,8 +36,8 @@ export function Dashboard(props: Props & NavigationScreenProps) {
     latestJournals,
     navigation,
     onRequestEdit,
-    onRequestRemove
-  } = props;
+    onRequestRemove,
+  } = props
 
   return (
     <PageContainer>
@@ -154,15 +154,15 @@ export function Dashboard(props: Props & NavigationScreenProps) {
         )}
       </View>
     </PageContainer>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
     paddingVertical: 20,
-    paddingHorizontal: 10
+    paddingHorizontal: 10,
   },
   buttonContainer: {
-    marginBottom: 14
-  }
-});
+    marginBottom: 14,
+  },
+})

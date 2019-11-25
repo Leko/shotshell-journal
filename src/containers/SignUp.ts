@@ -1,16 +1,13 @@
-import { Dispatch, AnyAction } from "redux";
-import { connect } from "react-redux";
-import { State } from "../redux/state";
-import { SignUp } from "../components/pages/SignUp";
+import { Dispatch, AnyAction } from "redux"
+import { connect } from "react-redux"
+import { State } from "../redux/state"
+import { SignUp } from "../components/pages/SignUp"
 
 function mapStateToProps(state: State) {
-  return {};
+  return {}
 }
 function mapDispatchToProps(dispatch: Dispatch<AnyAction>) {
-  return {};
+  return {}
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SignUp);
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp)

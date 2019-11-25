@@ -1,2 +1,2 @@
-export { reducer } from "./reducer";
-export { State } from "./state";
+export { reducer } from "./reducer"
+export { State } from "./state"

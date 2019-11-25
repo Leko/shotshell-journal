@@ -1,22 +1,22 @@
-import React from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
-import { Icon, Tile, View, Subtitle, Caption } from "@shoutem/ui";
-import { Journal as JournalModel } from "../../models/Journal";
+import React from "react"
+import { StyleSheet, TouchableOpacity } from "react-native"
+import { Icon, Tile, View, Subtitle, Caption } from "@shoutem/ui"
+import { Journal as JournalModel } from "../../models/Journal"
 
 type Props = {
-  journal: JournalModel;
-  onRequestEdit: () => any;
-  onRequestRemove: () => any;
-};
+  journal: JournalModel
+  onRequestEdit: () => any
+  onRequestRemove: () => any
+}
 
 export function Journal(props: Props) {
-  const { journal, onRequestEdit, onRequestRemove } = props;
+  const { journal, onRequestEdit, onRequestRemove } = props
 
   const monthDayFormatter = new Intl.DateTimeFormat("ja", {
     year: "numeric",
     month: "2-digit",
-    day: "2-digit"
-  });
+    day: "2-digit",
+  })
 
   return (
     <Tile style={styles.container}>
@@ -34,7 +34,7 @@ export function Journal(props: Props) {
           <View
             style={{
               flex: 1,
-              alignItems: "flex-end"
+              alignItems: "flex-end",
             }}
           >
             <View styleName="horizontal">
@@ -46,7 +46,7 @@ export function Journal(props: Props) {
                 <Icon
                   name="edit"
                   style={{
-                    fontSize: 18
+                    fontSize: 18,
                   }}
                 />
               </TouchableOpacity>
@@ -57,7 +57,7 @@ export function Journal(props: Props) {
                 <Icon
                   name="clear-text"
                   style={{
-                    fontSize: 18
+                    fontSize: 18,
                   }}
                 />
               </TouchableOpacity>
@@ -66,11 +66,11 @@ export function Journal(props: Props) {
         </View>
       </View>
     </Tile>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 8
-  }
-});
+    marginBottom: 8,
+  },
+})

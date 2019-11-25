@@ -1,21 +1,21 @@
-import { Dispatch } from "redux";
-import { connect } from "react-redux";
-import { NavigationScreenProps } from "react-navigation";
-import { withFormik, WithFormikConfig } from "formik";
-import * as Yup from "yup";
-import { State } from "../redux/state";
-import { UnsavedJournal } from "../models/Journal";
-import { JournalForm } from "../components/pages/JournalForm";
-import { addJournal } from "../usecases/addJournal";
-import { getLicenses } from "../redux/selectors/getLicenses";
-import { License } from "../models/License";
-import { getJournals } from "../redux/selectors/getJournals";
+import { Dispatch } from "redux"
+import { connect } from "react-redux"
+import { NavigationScreenProps } from "react-navigation"
+import { withFormik, WithFormikConfig } from "formik"
+import * as Yup from "yup"
+import { State } from "../redux/state"
+import { UnsavedJournal } from "../models/Journal"
+import { JournalForm } from "../components/pages/JournalForm"
+import { addJournal } from "../usecases/addJournal"
+import { getLicenses } from "../redux/selectors/getLicenses"
+import { License } from "../models/License"
+import { getJournals } from "../redux/selectors/getJournals"
 
 function mapStateToProps(state: State) {
   return {
     licenses: getLicenses(state),
-    journals: getJournals(state)
-  };
+    journals: getJournals(state),
+  }
 }
 
 function mapDispatchToProps(
@@ -24,16 +24,16 @@ function mapDispatchToProps(
 ) {
   return {
     async onSubmit(values: UnsavedJournal) {
-      await dispatch(addJournal(values));
-      ownProps.navigation.goBack();
-    }
-  };
+      await dispatch(addJournal(values))
+      ownProps.navigation.goBack()
+    },
+  }
 }
 
 const journalForm: WithFormikConfig<
   NavigationScreenProps<{ kind: UnsavedJournal["kind"] }> & {
-    licenses: License[];
-    onSubmit(values: UnsavedJournal): any;
+    licenses: License[]
+    onSubmit(values: UnsavedJournal): any
   },
   UnsavedJournal
 > = {
@@ -46,43 +46,43 @@ const journalForm: WithFormikConfig<
       .required(),
     // FIXME: should be required
     transferrer: Yup.string(),
-    place: Yup.string()
+    place: Yup.string(),
   }),
 
   mapPropsToValues(props) {
-    const { licenses, navigation } = props;
+    const { licenses, navigation } = props
 
-    const kind = navigation.getParam("kind", "consume");
+    const kind = navigation.getParam("kind", "consume")
     if (kind === "consume") {
       return {
         date: new Date(),
         kind: "consume",
         licenseId: licenses.length === 1 ? licenses[0].id : "", // TODO: 1つのときの制御
         amount: 100,
-        transferrer: ""
-      };
+        transferrer: "",
+      }
     } else {
       return {
         date: new Date(),
         kind: "receive",
         licenseId: licenses.length === 1 ? licenses[0].id : "", // TODO: 1つのときの制御
         amount: 100,
-        transferrer: ""
-      };
+        transferrer: "",
+      }
     }
   },
 
   handleSubmit(values, bag) {
-    bag.setSubmitting(true);
+    bag.setSubmitting(true)
     try {
-      bag.props.onSubmit(values);
+      bag.props.onSubmit(values)
     } finally {
-      bag.setSubmitting(false);
+      bag.setSubmitting(false)
     }
-  }
-};
+  },
+}
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withFormik(journalForm)(JournalForm));
+)(withFormik(journalForm)(JournalForm))

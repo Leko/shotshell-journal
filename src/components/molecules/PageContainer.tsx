@@ -1,14 +1,14 @@
-import React from "react";
-import { SafeAreaView } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { Screen } from "@shoutem/ui";
+import React from "react"
+import { SafeAreaView } from "react-native"
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
+import { Screen } from "@shoutem/ui"
 
 type Props = {
-  children: React.ReactNode;
-};
+  children: React.ReactNode
+}
 
 export function PageContainer(props: Props) {
-  const { children } = props;
+  const { children } = props
 
   return (
     <Screen>
@@ -17,5 +17,5 @@ export function PageContainer(props: Props) {
         <SafeAreaView>{children}</SafeAreaView>
       </KeyboardAwareScrollView>
     </Screen>
-  );
+  )
 }

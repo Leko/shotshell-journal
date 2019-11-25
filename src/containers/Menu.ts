@@ -1,18 +1,18 @@
-import { Dispatch } from "redux";
-import { Alert } from "react-native";
-import { NavigationScreenProps } from "react-navigation";
-import { connect } from "react-redux";
-import { State } from "../redux/state";
-import { Menu } from "../components/pages/Menu";
-import { getLoggedInUser } from "../redux/selectors/getLoggedInUser";
-import { getCarryOver } from "../redux/selectors/getCarryOver";
-import { logout } from "../usecases/logout";
+import { Dispatch } from "redux"
+import { Alert } from "react-native"
+import { NavigationScreenProps } from "react-navigation"
+import { connect } from "react-redux"
+import { State } from "../redux/state"
+import { Menu } from "../components/pages/Menu"
+import { getLoggedInUser } from "../redux/selectors/getLoggedInUser"
+import { getCarryOver } from "../redux/selectors/getCarryOver"
+import { logout } from "../usecases/logout"
 
 function mapStateToProps(state: State) {
   return {
     user: getLoggedInUser(state),
-    hasCarryOver: !!getCarryOver(state)
-  };
+    hasCarryOver: !!getCarryOver(state),
+  }
 }
 function mapDispatchToProps(
   dispatch: Dispatch<any>,
@@ -24,21 +24,18 @@ function mapDispatchToProps(
         {
           text: "ログアウトする",
           onPress: async () => {
-            await dispatch(logout());
-            ownProps.navigation.navigate("GuestStack");
+            await dispatch(logout())
+            ownProps.navigation.navigate("GuestStack")
           },
-          style: "destructive"
+          style: "destructive",
         },
         {
           text: "キャンセル",
-          style: "cancel"
-        }
-      ]);
-    }
-  };
+          style: "cancel",
+        },
+      ])
+    },
+  }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Menu);
+export default connect(mapStateToProps, mapDispatchToProps)(Menu)

@@ -1,7 +1,7 @@
-import React from "react";
-import { StyleSheet } from "react-native";
-import { Toggle } from "react-powerplug";
-import DateTimePicker from "react-native-modal-datetime-picker";
+import React from "react"
+import { StyleSheet } from "react-native"
+import { Toggle } from "react-powerplug"
+import DateTimePicker from "react-native-modal-datetime-picker"
 import {
   View,
   Text,
@@ -9,19 +9,19 @@ import {
   Icon,
   Heading,
   Title,
-  TextInput
-} from "@shoutem/ui";
-import { FormikProps } from "formik";
+  TextInput,
+} from "@shoutem/ui"
+import { FormikProps } from "formik"
 import {
   UnsavedLicense,
   getUnlimitedExpiredAt,
   getLimitedExpiredAt,
-  getPurposeName
-} from "../../models/License";
-import { PageContainer } from "../molecules/PageContainer";
-import { ValidationError } from "../atoms/ValidationError";
+  getPurposeName,
+} from "../../models/License"
+import { PageContainer } from "../molecules/PageContainer"
+import { ValidationError } from "../atoms/ValidationError"
 
-type Props = {} & FormikProps<UnsavedLicense>;
+type Props = {} & FormikProps<UnsavedLicense>
 
 export function LicenseForm(props: Props) {
   const {
@@ -32,15 +32,15 @@ export function LicenseForm(props: Props) {
     isSubmitting,
     handleSubmit,
     setFieldValue,
-    setFieldTouched
-  } = props;
-  const canSubmit = isValid && !isSubmitting;
+    setFieldTouched,
+  } = props
+  const canSubmit = isValid && !isSubmitting
 
   const monthDayFormatter = new Intl.DateTimeFormat("ja", {
     year: "numeric",
     month: "2-digit",
-    day: "2-digit"
-  });
+    day: "2-digit",
+  })
 
   return (
     <PageContainer>
@@ -53,7 +53,7 @@ export function LicenseForm(props: Props) {
             <Button
               styleName={[
                 "full-width",
-                values.kind === "limited" ? "secondary" : "muted"
+                values.kind === "limited" ? "secondary" : "muted",
               ].join(" ")}
               onPress={() => setFieldValue("kind", "limited")}
             >
@@ -62,7 +62,7 @@ export function LicenseForm(props: Props) {
             <Button
               styleName={[
                 "full-width",
-                values.kind === "unlimited" ? "secondary" : "muted"
+                values.kind === "unlimited" ? "secondary" : "muted",
               ].join(" ")}
               onPress={() => setFieldValue("kind", "unlimited")}
             >
@@ -78,7 +78,7 @@ export function LicenseForm(props: Props) {
             <Button
               styleName={[
                 "full-width",
-                values.purpose === "SHOOTING" ? "secondary" : "muted"
+                values.purpose === "SHOOTING" ? "secondary" : "muted",
               ].join(" ")}
               onPress={() => setFieldValue("purpose", "SHOOTING")}
             >
@@ -87,7 +87,7 @@ export function LicenseForm(props: Props) {
             <Button
               styleName={[
                 "full-width",
-                values.purpose === "HUNTING" ? "secondary" : "muted"
+                values.purpose === "HUNTING" ? "secondary" : "muted",
               ].join(" ")}
               onPress={() => setFieldValue("purpose", "HUNTING")}
             >
@@ -106,8 +106,8 @@ export function LicenseForm(props: Props) {
                 <Button
                   style={{ justifyContent: "flex-start" }}
                   onPress={() => {
-                    setFieldTouched("startsAt");
-                    toggle();
+                    setFieldTouched("startsAt")
+                    toggle()
                   }}
                 >
                   <Text>{monthDayFormatter.format(values.startsAt)}</Text>
@@ -118,14 +118,14 @@ export function LicenseForm(props: Props) {
                   isVisible={on}
                   onCancel={toggle}
                   onConfirm={date => {
-                    setFieldValue("startsAt", date);
+                    setFieldValue("startsAt", date)
                     setFieldValue(
                       "expiredAt",
                       values.kind === "limited"
                         ? getLimitedExpiredAt(date)
                         : getUnlimitedExpiredAt(date)
-                    );
-                    toggle();
+                    )
+                    toggle()
                   }}
                 />
               </>
@@ -143,8 +143,8 @@ export function LicenseForm(props: Props) {
                 <Button
                   style={{ justifyContent: "flex-start" }}
                   onPress={() => {
-                    setFieldTouched("expiredAt");
-                    toggle();
+                    setFieldTouched("expiredAt")
+                    toggle()
                   }}
                 >
                   <Text>{monthDayFormatter.format(values.expiredAt)}</Text>
@@ -155,8 +155,8 @@ export function LicenseForm(props: Props) {
                   isVisible={on}
                   onCancel={toggle}
                   onConfirm={date => {
-                    setFieldValue("expiredAt", date);
-                    toggle();
+                    setFieldValue("expiredAt", date)
+                    toggle()
                   }}
                 />
               </>
@@ -177,13 +177,13 @@ export function LicenseForm(props: Props) {
                 keyboardType="decimal-pad"
                 defaultValue={String(values.amount)}
                 onBlur={() => {
-                  setFieldTouched("amount");
+                  setFieldTouched("amount")
                 }}
                 onChangeText={(text: string) => {
                   if (isNaN(parseInt(text, 10))) {
-                    return;
+                    return
                   }
-                  setFieldValue("amount", parseInt(text, 10));
+                  setFieldValue("amount", parseInt(text, 10))
                 }}
               />
               <ValidationError
@@ -199,13 +199,13 @@ export function LicenseForm(props: Props) {
                 keyboardType="decimal-pad"
                 defaultValue={String(values.gauge)}
                 onBlur={() => {
-                  setFieldTouched("gauge");
+                  setFieldTouched("gauge")
                 }}
                 onChangeText={(text: string) => {
                   if (isNaN(parseInt(text, 10))) {
-                    return;
+                    return
                   }
-                  setFieldValue("gauge", parseInt(text, 10));
+                  setFieldValue("gauge", parseInt(text, 10))
                 }}
               />
               <ValidationError
@@ -229,20 +229,20 @@ export function LicenseForm(props: Props) {
         </View>
       </View>
     </PageContainer>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
     paddingVertical: 20,
-    paddingHorizontal: 10
+    paddingHorizontal: 10,
   },
   pickerContainer: {},
   inputPlaceholder: {
-    color: "black"
+    color: "black",
   },
   inputLike: {
     padding: 14,
-    justifyContent: "flex-start"
-  }
-});
+    justifyContent: "flex-start",
+  },
+})

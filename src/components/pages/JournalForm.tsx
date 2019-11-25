@@ -1,11 +1,11 @@
-import React from "react";
-import sortBy from "lodash/sortBy";
-import uniq from "lodash/uniq";
-import { StyleSheet } from "react-native";
-import { NavigationScreenProps } from "react-navigation";
-import { Toggle } from "react-powerplug";
-import RNPickerSelect from "react-native-picker-select";
-import DateTimePicker from "react-native-modal-datetime-picker";
+import React from "react"
+import sortBy from "lodash/sortBy"
+import uniq from "lodash/uniq"
+import { StyleSheet } from "react-native"
+import { NavigationScreenProps } from "react-navigation"
+import { Toggle } from "react-powerplug"
+import RNPickerSelect from "react-native-picker-select"
+import DateTimePicker from "react-native-modal-datetime-picker"
 import {
   View,
   Text,
@@ -15,25 +15,25 @@ import {
   Icon,
   Heading,
   Title,
-  TextInput
-} from "@shoutem/ui";
-import { FormikProps } from "formik";
-import { License } from "../../models/License";
-import { Journal } from "../../models/Journal";
-import { UnsavedJournal } from "../../models/Journal";
-import { Notice } from "../molecules/Notice";
-import { PageContainer } from "../molecules/PageContainer";
-import { ValidationError } from "../atoms/ValidationError";
+  TextInput,
+} from "@shoutem/ui"
+import { FormikProps } from "formik"
+import { License } from "../../models/License"
+import { Journal } from "../../models/Journal"
+import { UnsavedJournal } from "../../models/Journal"
+import { Notice } from "../molecules/Notice"
+import { PageContainer } from "../molecules/PageContainer"
+import { ValidationError } from "../atoms/ValidationError"
 
 type Props = {
-  licenses: License[];
-  journals: Journal[];
-} & FormikProps<UnsavedJournal>;
+  licenses: License[]
+  journals: Journal[]
+} & FormikProps<UnsavedJournal>
 
 const purposeToLanguage = {
   SHOOTING: "標的射撃",
-  HUNTING: "狩猟"
-};
+  HUNTING: "狩猟",
+}
 
 export function JournalForm(props: Props & NavigationScreenProps) {
   const {
@@ -47,42 +47,42 @@ export function JournalForm(props: Props & NavigationScreenProps) {
     handleSubmit,
     setFieldValue,
     setFieldTouched,
-    navigation
-  } = props;
-  const canSubmit = isValid && !isSubmitting;
+    navigation,
+  } = props
+  const canSubmit = isValid && !isSubmitting
 
   const monthDayFormatter = new Intl.DateTimeFormat("ja", {
     year: "numeric",
     month: "2-digit",
-    day: "2-digit"
-  });
+    day: "2-digit",
+  })
 
   const stringify = (license: License) =>
     (license.kind === "unlimited"
       ? [
           "無許可",
           purposeToLanguage[license.purpose],
-          monthDayFormatter.format(license.startsAt)
+          monthDayFormatter.format(license.startsAt),
         ]
       : [
           purposeToLanguage[license.purpose],
           monthDayFormatter.format(license.startsAt),
           monthDayFormatter.format(license.expiredAt),
           `${license.gauge}番`,
-          `${license.amount}発`
+          `${license.amount}発`,
         ]
-    ).join("-");
+    ).join("-")
 
   const histories = uniq(
     sortBy(
       journals.filter(j => j.kind === values.kind),
       j => -j.createdAt.getTime()
     ).map(j => (j.kind === "receive" ? j.transferrer : j.place))
-  ).slice(0, 5);
+  ).slice(0, 5)
   const licensesToSelect = licenses.map(l => ({
     value: l,
-    label: stringify(l)
-  }));
+    label: stringify(l),
+  }))
 
   return (
     <PageContainer>
@@ -98,8 +98,8 @@ export function JournalForm(props: Props & NavigationScreenProps) {
                 <Button
                   style={{ justifyContent: "flex-start" }}
                   onPress={() => {
-                    setFieldTouched("date");
-                    toggle();
+                    setFieldTouched("date")
+                    toggle()
                   }}
                 >
                   <Text>{monthDayFormatter.format(values.date)}</Text>
@@ -110,8 +110,8 @@ export function JournalForm(props: Props & NavigationScreenProps) {
                   isVisible={on}
                   onCancel={toggle}
                   onConfirm={date => {
-                    setFieldValue("date", date);
-                    toggle();
+                    setFieldValue("date", date)
+                    toggle()
                   }}
                 />
               </>
@@ -147,13 +147,13 @@ export function JournalForm(props: Props & NavigationScreenProps) {
                 style={{
                   placeholder: styles.inputPlaceholder,
                   inputIOS: styles.inputLike,
-                  inputAndroid: styles.inputLike
+                  inputAndroid: styles.inputLike,
                 }}
                 onClose={() => {
-                  setFieldTouched("licenseId");
+                  setFieldTouched("licenseId")
                 }}
                 onValueChange={item => {
-                  setFieldValue("licenseId", item.id);
+                  setFieldValue("licenseId", item.id)
                 }}
               />
             </Button>
@@ -171,7 +171,7 @@ export function JournalForm(props: Props & NavigationScreenProps) {
             <Button
               styleName={[
                 "full-width",
-                values.kind === "consume" ? "secondary" : "muted"
+                values.kind === "consume" ? "secondary" : "muted",
               ].join(" ")}
               onPress={() => setFieldValue("kind", "consume")}
             >
@@ -181,7 +181,7 @@ export function JournalForm(props: Props & NavigationScreenProps) {
             <Button
               styleName={[
                 "full-width",
-                values.kind === "receive" ? "secondary" : "muted"
+                values.kind === "receive" ? "secondary" : "muted",
               ].join(" ")}
               onPress={() => setFieldValue("kind", "receive")}
             >
@@ -198,13 +198,13 @@ export function JournalForm(props: Props & NavigationScreenProps) {
             keyboardType="decimal-pad"
             defaultValue={String(values.amount)}
             onBlur={() => {
-              setFieldTouched("amount");
+              setFieldTouched("amount")
             }}
             onChangeText={(text: string) => {
               if (isNaN(parseInt(text, 10))) {
-                return;
+                return
               }
-              setFieldValue("amount", parseInt(text, 10));
+              setFieldValue("amount", parseInt(text, 10))
             }}
           />
           <ValidationError field="amount" errors={errors} touched={touched} />
@@ -217,10 +217,10 @@ export function JournalForm(props: Props & NavigationScreenProps) {
               <TextInput
                 value={values.transferrer}
                 onBlur={() => {
-                  setFieldTouched("transferrer");
+                  setFieldTouched("transferrer")
                 }}
                 onChangeText={(text: string) => {
-                  setFieldValue("transferrer", text);
+                  setFieldValue("transferrer", text)
                 }}
               />
               {histories.length ? (
@@ -255,10 +255,10 @@ export function JournalForm(props: Props & NavigationScreenProps) {
               <TextInput
                 value={values.place}
                 onBlur={() => {
-                  setFieldTouched("place");
+                  setFieldTouched("place")
                 }}
                 onChangeText={(text: string) => {
-                  setFieldValue("place", text);
+                  setFieldValue("place", text)
                 }}
               />
               {histories.length ? (
@@ -300,20 +300,20 @@ export function JournalForm(props: Props & NavigationScreenProps) {
         </View>
       </View>
     </PageContainer>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
     paddingVertical: 20,
-    paddingHorizontal: 10
+    paddingHorizontal: 10,
   },
   pickerContainer: {},
   inputPlaceholder: {
-    color: "black"
+    color: "black",
   },
   inputLike: {
     padding: 14,
-    justifyContent: "flex-start"
-  }
-});
+    justifyContent: "flex-start",
+  },
+})

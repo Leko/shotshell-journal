@@ -1,36 +1,36 @@
-import React from "react";
-import { Print } from "expo";
-import { Share } from "react-native";
-import { AnyAction } from "redux";
-import { ThunkAction } from "redux-thunk";
-import { Helmet } from "react-helmet";
-import paperSize from "paper-size";
-import { State } from "../redux/state";
-import { renderToString } from "../lib/html";
-import { Report } from "../components/pages/Report";
-import { getLoggedInUser } from "../redux/selectors/getLoggedInUser";
-import { getJournals } from "../redux/selectors/getJournals";
-import { addExamine } from "../redux/store/examines/actions";
+import React from "react"
+import { Print } from "expo"
+import { Share } from "react-native"
+import { AnyAction } from "redux"
+import { ThunkAction } from "redux-thunk"
+import { Helmet } from "react-helmet"
+import paperSize from "paper-size"
+import { State } from "../redux/state"
+import { renderToString } from "../lib/html"
+import { Report } from "../components/pages/Report"
+import { getLoggedInUser } from "../redux/selectors/getLoggedInUser"
+import { getJournals } from "../redux/selectors/getJournals"
+import { addExamine } from "../redux/store/examines/actions"
 
 export const generateReport = ({
   remaining,
   startsAt,
-  endsAt
+  endsAt,
 }: {
-  remaining: number;
-  startsAt: Date;
-  endsAt: Date;
+  remaining: number
+  startsAt: Date
+  endsAt: Date
 }): ThunkAction<Promise<void>, State, {}, AnyAction> => async (
   dispatch,
   getState
 ) => {
-  const user = getLoggedInUser(getState());
+  const user = getLoggedInUser(getState())
   if (!user) {
-    return;
+    return
   }
 
-  const { licenses } = getState().licenses;
-  const journals = getJournals(getState());
+  const { licenses } = getState().licenses
+  const journals = getJournals(getState())
 
   const journalsInRange = journals
     .filter(
@@ -38,13 +38,13 @@ export const generateReport = ({
         startsAt.getTime() <= j.createdAt.getTime() &&
         j.createdAt.getTime() <= endsAt.getTime()
     )
-    .sort((a, b) => a.date.getTime() - b.date.getTime());
+    .sort((a, b) => a.date.getTime() - b.date.getTime())
 
   const dateFormatter = new Intl.DateTimeFormat("en", {
     year: "numeric",
     month: "2-digit",
-    day: "2-digit"
-  });
+    day: "2-digit",
+  })
   const html = renderToString(
     <>
       <Helmet>
@@ -74,22 +74,22 @@ export const generateReport = ({
       </div>
     </>,
     Helmet
-  );
+  )
 
   const [height, width] = paperSize.getSize("a4", {
     unit: "pixel",
-    dpi: 144
-  });
+    dpi: 144,
+  })
   const { uri } = await Print.printToFileAsync({
     html,
     width,
-    height
-  });
+    height,
+  })
 
-  const result = await Share.share({ url: uri });
+  const result = await Share.share({ url: uri })
   if (result.action === Share.dismissedAction) {
-    return;
+    return
   }
 
-  dispatch(addExamine({ examinedAt: endsAt }));
-};
+  dispatch(addExamine({ examinedAt: endsAt }))
+}

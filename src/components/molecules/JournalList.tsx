@@ -1,16 +1,16 @@
-import React from "react";
-import { FlatList } from "react-native";
-import { Journal } from "../../models/Journal";
-import { Journal as JournalItem } from "./Journal";
+import React from "react"
+import { FlatList } from "react-native"
+import { Journal } from "../../models/Journal"
+import { Journal as JournalItem } from "./Journal"
 
 type Props = {
-  items: Journal[];
-  onRequestEdit: (item: Journal) => any;
-  onRequestRemove: (item: Journal) => any;
-};
+  items: Journal[]
+  onRequestEdit: (item: Journal) => any
+  onRequestRemove: (item: Journal) => any
+}
 
 export function JournalList(props: Props) {
-  const { items, onRequestEdit, onRequestRemove } = props;
+  const { items, onRequestEdit, onRequestRemove } = props
   return (
     <FlatList
       data={items}
@@ -23,5 +23,5 @@ export function JournalList(props: Props) {
         />
       )}
     />
-  );
+  )
 }

@@ -1,8 +1,8 @@
-import { State } from "../state";
+import { State } from "../state"
 
 export function getCarryOver(state: State) {
   if (!state.carryOver.resolved) {
-    return null;
+    return null
   }
-  return state.carryOver.carryOver;
+  return state.carryOver.carryOver
 }

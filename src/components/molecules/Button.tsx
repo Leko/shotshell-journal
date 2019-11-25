@@ -1,5 +1,5 @@
-import React from "react";
-import { Text, Icon, Button as ShoutemButton } from "@shoutem/ui";
+import React from "react"
+import { Text, Icon, Button as ShoutemButton } from "@shoutem/ui"
 
 // FIXME: Move to @types
 type IconName =
@@ -88,25 +88,25 @@ type IconName =
   | "directions"
   | "maps"
   | "uber"
-  | "instagram";
+  | "instagram"
 
 type Props = {
-  label: string;
-  secondary?: boolean;
-  action?: boolean;
-  icon?: IconName;
-  disabled?: boolean;
-  onPress: () => any;
-};
+  label: string
+  secondary?: boolean
+  action?: boolean
+  icon?: IconName
+  disabled?: boolean
+  onPress: () => any
+}
 
 export function Button(props: Props) {
-  const { label, secondary, action, icon, disabled, onPress } = props;
+  const { label, secondary, action, icon, disabled, onPress } = props
   return (
     <ShoutemButton
       styleName={[
         secondary ? "secondary" : "",
         action ? "action" : "",
-        disabled ? "muted" : ""
+        disabled ? "muted" : "",
       ].join(" ")}
       disabled={disabled}
       onPress={onPress}
@@ -114,5 +114,5 @@ export function Button(props: Props) {
       {icon ? <Icon name={icon} /> : null}
       <Text>{label}</Text>
     </ShoutemButton>
-  );
+  )
 }

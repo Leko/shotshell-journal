@@ -1,13 +1,13 @@
-import { ReactElement } from "react";
-import { Helmet as HelmetType } from "react-helmet";
-import { renderToString as renderToStringOrigin } from "react-dom/server";
+import { ReactElement } from "react"
+import { Helmet as HelmetType } from "react-helmet"
+import { renderToString as renderToStringOrigin } from "react-dom/server"
 
 export function renderToString(
   jsx: ReactElement,
   Helmet: typeof HelmetType
 ): string {
-  const body = renderToStringOrigin(jsx);
-  const helmet = Helmet.renderStatic();
+  const body = renderToStringOrigin(jsx)
+  const helmet = Helmet.renderStatic()
   const html = `
     <!doctype html>
     <html ${helmet.htmlAttributes.toString()}>
@@ -20,7 +20,7 @@ export function renderToString(
         ${body}
       </body>
     </html>
-  `.trim();
+  `.trim()
 
-  return html;
+  return html
 }

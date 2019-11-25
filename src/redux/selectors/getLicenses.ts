@@ -1,5 +1,5 @@
-import { State } from "../state";
+import { State } from "../state"
 
 export function getLicenses(state: State) {
-  return Object.values(state.licenses.licenses);
+  return Object.values(state.licenses.licenses)
 }
